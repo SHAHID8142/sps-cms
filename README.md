@@ -1,14 +1,16 @@
-# ⚡ SPS-CMS (v2.2.0 Global Settings & Visual Builder Standard)
+# ⚡ SPS-CMS (v2.3.0 Lead Inbox & Full Builder Standard)
 
-> **The Definitive Universal Visual & Collection CMS Architect with 1-Point Global Settings Sync, 100% Granular Surface Coverage, In-Context Popover Inspectors, Live Image Swapping, Gemini Flash AI Auto-Translation, and 1-Click Backups**  
+> **The Definitive Universal Visual & Collection CMS Architect with Zero-SaaS Lead Capture & Inquiries Inbox, 1-Point Global Settings Sync, Tracking Scripts Injector, 100% Granular Surface Coverage, In-Context Popover Inspectors, Live Image Swapping, Gemini Flash AI Auto-Translation, and 1-Click Backups**  
 > *Supports JavaScript/TypeScript (Astro, Next.js, Nuxt/Vue, SvelteKit), PHP (Laravel, Native), Python (Django, FastAPI), Go, Ruby, and Vanilla HTML across Windows (7/8/10/11), macOS, and Linux.*
 
 ---
 
-## 🌟 Why SPS-CMS v2.2.0 is Unbeatable
+## 🌟 Why SPS-CMS v2.3.0 is the Gold Standard for Client Websites
 
 SPS-CMS bridges the gap between high-speed custom codebases and effortless non-technical client UX:
-- **1-Point Global Settings Sync:** Manage Phone, WhatsApp, Support Email, Physical Address, Brand Logo, and Social Media links centrally at `/admin/settings`. Updating in one spot instantly propagates across every header, footer, contact modal, and single detail page on the entire website!
+- **Zero-SaaS Lead Capture & Inquiries Inbox (`/admin/inquiries`):** Captures all client contact forms and booking requests locally without paying monthly third-party form fees (Formspree, Typeform). Features live unread lead badges, search, status filters (`New`, `Contacted`, `Closed`), 1-click direct WhatsApp chat, and 1-click CSV export!
+- **1-Point Global Settings Sync (`/admin/settings`):** Manage Phone, WhatsApp, Support Email, Physical Address, Brand Logo, and Social Media links centrally. Updating in one spot instantly propagates across every header, footer, and booking box!
+- **Analytics & Tracking Scripts Injector:** Cleanly paste Google Analytics (GA4), Meta/Facebook Pixel, or GTM scripts from `/admin/settings` with zero code edits.
 - **100% Granular Surface Coverage:** ZERO hardcoded strings. Every single eyebrow, badge, headline, sublabel, stat number, stat label, button text, destination URL, image, and footer detail is individually editable live.
 - **Zero Third-Party SaaS Fees:** Runs entirely on the client's own database (MySQL, SQLite, Postgres, Cloudflare D1) and storage (`/public/uploads`, R2, S3).
 - **In-Context Visual Popover Inspector (Engine A):** Non-intrusive floating bottom dock. Click text, CTA buttons, or photos to edit labels, change URLs, or drop new images live on the page with zero accidental page redirection.
@@ -18,7 +20,7 @@ SPS-CMS bridges the gap between high-speed custom codebases and effortless non-t
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│               SPS-CMS v2.2.0 MASTER ARCHITECTURE OVERVIEW              │
+│               SPS-CMS v2.3.0 MASTER ARCHITECTURE OVERVIEW              │
 ├───────────────────────────────────┬────────────────────────────────────┤
 │ 1. DATA LAYER (Host-Agnostic)     │ 2. STORAGE LAYER (Client-Owned)    │
 │    • Native MySQL (cPanel/VPS)    │    • Local Server: /public/uploads │
@@ -26,7 +28,7 @@ SPS-CMS bridges the gap between high-speed custom codebases and effortless non-t
 │    • PostgreSQL / Neon / Supabase │    • Zero Third-Party Monthly Fee  │
 │    • Cloudflare D1 (Edge Native)  │                                    │
 ├───────────────────────────────────┴────────────────────────────────────┤
-│ 3. DUAL-ENGINE CLIENT & GLOBAL EXPERIENCE                              │
+│ 3. COMPLETE CLIENT & LEAD MANAGEMENT SUITE                             │
 │    ┌──────────────────────────────────┬──────────────────────────────┐ │
 │    │ Engine A: In-Context Visual      │ Engine B: Collection Hub     │ │
 │    │ • Floating Bottom Dock           │ • Searchable Data Tables     │ │
@@ -35,9 +37,11 @@ SPS-CMS bridges the gap between high-speed custom codebases and effortless non-t
 │    │ • Zero accidental redirection    │ • Home Featured [ON/OFF]     │ │
 │    │ • Live DOM update & publish      │ • Single Source of Truth     │ │
 │    ├──────────────────────────────────┴──────────────────────────────┤ │
+│    │ 📬 Zero-SaaS Inquiries Inbox (/admin/inquiries):                │ │
+│    │ • Contact & booking form capture, WhatsApp chat & CSV export    │ │
+│    ├─────────────────────────────────────────────────────────────────┤ │
 │    │ ⚙️ Centralized Global Options Hub (/admin/settings):            │ │
-│    │ • Phone, WhatsApp, Email, Address, Brand Logo, Social Media     │ │
-│    │ • Updating once propagates across all headers & footers live!   │ │
+│    │ • Phone, WhatsApp, Email, Address, Brand Logo, GA4/Pixels       │ │
 │    └─────────────────────────────────────────────────────────────────┘ │
 ├────────────────────────────────────────────────────────────────────────┤
 │ 4. MULTI-LANGUAGE & GEMINI FLASH AI TRANSLATION                        │
