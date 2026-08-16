@@ -10,43 +10,40 @@
   let isDirty = false;
   let activeInspector = null;
 
-  // 1. Create Top Bar Overlay
-  const bar = document.createElement('div');
-  bar.id = 'sps-cms-topbar';
-  bar.style.cssText = `
-    position: fixed; top: 0; left: 0; right: 0; z-index: 999999;
-    background: rgba(10, 15, 30, 0.95); backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(16, 185, 129, 0.4);
-    padding: 8px 20px; display: flex; align-items: center; justify-content: space-between;
+  // 1. Create Sleek Floating Bottom Dock (Zero Top Navbar Overlap)
+  const dock = document.createElement('div');
+  dock.id = 'sps-cms-floating-dock';
+  dock.style.cssText = `
+    position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); z-index: 999999;
+    background: rgba(2, 6, 23, 0.95); backdrop-filter: blur(16px);
+    border: 1px solid rgba(16, 185, 129, 0.4); border-radius: 9999px;
+    padding: 6px 16px; display: flex; align-items: center; gap: 12px;
     font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
-    color: #fff; font-size: 13px; box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+    color: #fff; font-size: 12px; box-shadow: 0 20px 40px rgba(0,0,0,0.6);
   `;
 
-  bar.innerHTML = `
-    <div style="display: flex; align-items: center; gap: 10px;">
+  dock.innerHTML = `
+    <div style="display: flex; align-items: center; gap: 8px; padding-right: 8px; border-right: 1px solid #1e293b;">
       <span style="width: 8px; height: 8px; background: #10b981; border-radius: 50%; display: inline-block;"></span>
-      <strong style="color: #10b981; letter-spacing: 0.5px;">SPS-CMS Live Visual Architect</strong>
-      <span style="color: #64748b; font-size: 11px; font-family: monospace;">Page: ${window.location.pathname}</span>
+      <strong style="color: #10b981; letter-spacing: 0.5px; text-transform: uppercase; font-size: 11px;">SPS-CMS Live</strong>
     </div>
-    <div style="display: flex; align-items: center; gap: 10px;">
-      <button id="sps-toggle-btn" style="
-        background: #1e293b; color: #e2e8f0; border: 1px solid #334155;
-        padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;
-      ">⚡ Edit Mode: OFF</button>
-      
-      <button id="sps-publish-btn" style="
-        display: none; background: #10b981; color: #022c22; border: none;
-        padding: 5px 14px; border-radius: 6px; font-size: 12px; font-weight: 800; cursor: pointer;
-      ">🚀 Publish Changes</button>
+    
+    <button id="sps-toggle-btn" style="
+      background: #1e293b; color: #e2e8f0; border: 1px solid #334155;
+      padding: 5px 14px; border-radius: 9999px; font-size: 12px; font-weight: 700; cursor: pointer;
+    ">⚡ Edit Mode: OFF</button>
+    
+    <button id="sps-publish-btn" style="
+      display: none; background: #10b981; color: #022c22; border: none;
+      padding: 5px 14px; border-radius: 9999px; font-size: 12px; font-weight: 800; cursor: pointer;
+    ">🚀 Publish Changes</button>
 
-      <a href="/admin" target="_blank" style="
-        color: #94a3b8; text-decoration: none; font-size: 12px; padding: 5px 8px;
-      ">Admin Portal ↗</a>
-    </div>
+    <a href="/admin" target="_blank" style="
+      color: #94a3b8; text-decoration: none; font-size: 12px; padding: 4px 8px;
+    ">Admin Portal ↗</a>
   `;
 
-  document.body.appendChild(bar);
-  document.body.style.paddingTop = (parseInt(document.body.style.paddingTop || 0) + 45) + 'px';
+  document.body.appendChild(dock);
 
   // 2. Inspector Popover Element
   const inspectorBox = document.createElement('div');
@@ -67,7 +64,7 @@
   document.addEventListener('click', function (e) {
     if (!isEditing) return;
 
-    if (e.target.closest('#sps-cms-topbar') || e.target.closest('#sps-cms-inspector')) {
+    if (e.target.closest('#sps-cms-floating-dock') || e.target.closest('#sps-cms-inspector')) {
       return;
     }
 
@@ -138,7 +135,7 @@
   // Toggle Edit Mode
   toggleBtn.addEventListener('click', function () {
     isEditing = !isEditing;
-    toggleBtn.innerText = isEditing ? '⚡ Edit Mode: ON (Click Any Item)' : '⚡ Edit Mode: OFF';
+    toggleBtn.innerText = isEditing ? '⚡ Edit Mode: ON' : '⚡ Edit Mode: OFF';
     toggleBtn.style.background = isEditing ? '#10b981' : '#1e293b';
     toggleBtn.style.color = isEditing ? '#022c22' : '#e2e8f0';
 

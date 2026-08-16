@@ -16,6 +16,7 @@ interface ActiveInspector {
 
 export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }) => {
   const [isEditing, setIsEditing] = useState(false);
+  const [isMinimized, setIsMinimized] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
   const [publishedToast, setPublishedToast] = useState(false);
@@ -28,7 +29,7 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
       if (!isEditing) return;
 
       const target = e.target as HTMLElement;
-      if (target.closest('#sps-cms-topbar') || target.closest('#sps-cms-inspector')) {
+      if (target.closest('#sps-cms-floating-dock') || target.closest('#sps-cms-inspector')) {
         return;
       }
 
@@ -162,48 +163,70 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
 
   return (
     <>
-      <div id="sps-cms-topbar" className="fixed top-0 inset-x-0 z-50 bg-slate-950/95 backdrop-blur border-b border-emerald-500/40 px-6 py-2.5 flex items-center justify-between text-white text-xs font-sans shadow-2xl">
-        <div className="flex items-center gap-3">
-          <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
-          <span className="font-bold text-emerald-400 tracking-wide uppercase text-[11px]">SPS-CMS Live Visual Architect</span>
-          <span className="text-slate-400 font-mono text-[11px]">Page: {pageSlug}</span>
-        </div>
-
-        <div className="flex items-center gap-3">
-          {publishedToast && (
-            <span className="text-xs bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/30 font-semibold">
-              ✨ All Changes & Links Published to DB!
-            </span>
-          )}
-
+      <div
+        id="sps-cms-floating-dock"
+        className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 transition-all duration-300"
+      >
+        {isMinimized ? (
           <button
-            onClick={toggleMode}
-            className={`px-3.5 py-1.5 rounded-lg font-bold transition-all flex items-center gap-1.5 ${
-              isEditing
-                ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/20 ring-2 ring-emerald-300'
-                : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
-            }`}
+            onClick={() => setIsMinimized(false)}
+            className="w-12 h-12 rounded-full bg-slate-950/90 border border-emerald-500/50 shadow-2xl backdrop-blur-xl flex items-center justify-center text-emerald-400 font-bold hover:scale-110 transition-transform"
+            title="Expand SPS-CMS Editor Dock"
           >
-            <span>{isEditing ? '⚡ Edit Mode: ON (Click Any CTA/Text)' : '👁️ Edit Mode: OFF'}</span>
+            ⚡
           </button>
+        ) : (
+          <div className="bg-slate-950/95 border border-emerald-500/40 rounded-full px-4 py-2 flex items-center gap-3 shadow-2xl backdrop-blur-xl text-white text-xs font-sans ring-1 ring-white/10">
+            <div className="flex items-center gap-2 pr-2 border-r border-slate-800">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse"></span>
+              <span className="font-bold text-emerald-400 tracking-wide uppercase text-[11px] hidden sm:inline">
+                SPS-CMS Live
+              </span>
+            </div>
 
-          {dirty && (
+            {publishedToast && (
+              <span className="text-[11px] bg-emerald-500/20 text-emerald-300 px-3 py-1 rounded-full border border-emerald-500/30 font-semibold animate-fade-in">
+                ✨ Saved to DB!
+              </span>
+            )}
+
             <button
-              onClick={handleSave}
-              disabled={saving}
-              className="px-4 py-1.5 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold rounded-lg shadow-lg shadow-emerald-500/30 animate-pulse"
+              onClick={toggleMode}
+              className={`px-3.5 py-1.5 rounded-full font-bold transition-all flex items-center gap-1.5 ${
+                isEditing
+                  ? 'bg-emerald-500 text-slate-950 shadow-md shadow-emerald-500/30 ring-2 ring-emerald-300'
+                  : 'bg-slate-800 text-slate-300 hover:text-white border border-slate-700'
+              }`}
             >
-              {saving ? 'Publishing...' : '🚀 Publish All Changes'}
+              <span>{isEditing ? '⚡ Edit Mode: ON' : '👁️ Edit Mode: OFF'}</span>
             </button>
-          )}
 
-          <a
-            href="/admin"
-            className="px-3 py-1.5 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-300 rounded-lg font-medium"
-          >
-            Admin Dashboard ↗
-          </a>
-        </div>
+            {dirty && (
+              <button
+                onClick={handleSave}
+                disabled={saving}
+                className="px-4 py-1.5 bg-emerald-400 hover:bg-emerald-300 text-slate-950 font-bold rounded-full shadow-lg shadow-emerald-500/30 animate-bounce"
+              >
+                {saving ? 'Saving...' : '🚀 Publish Changes'}
+              </button>
+            )}
+
+            <a
+              href="/admin"
+              className="px-3 py-1.5 bg-slate-900 border border-slate-800 hover:bg-slate-800 text-slate-300 rounded-full font-medium hidden sm:inline"
+            >
+              Admin Portal ↗
+            </a>
+
+            <button
+              onClick={() => setIsMinimized(true)}
+              className="text-slate-400 hover:text-white px-1.5 py-0.5 text-sm"
+              title="Minimize to floating bubble"
+            >
+              ▾
+            </button>
+          </div>
+        )}
       </div>
 
       {inspector && (
@@ -212,7 +235,7 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
           ref={inspectorRef}
           style={{
             position: 'fixed',
-            top: Math.min(window.innerHeight - 300, Math.max(60, inspector.rect.bottom + 10)),
+            top: Math.min(window.innerHeight - 320, Math.max(60, inspector.rect.bottom + 10)),
             left: Math.min(window.innerWidth - 360, Math.max(20, inspector.rect.left)),
             zIndex: 999999
           }}
