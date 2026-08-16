@@ -1,120 +1,79 @@
-# Framework Adapters: Astro & Next.js
+# Multi-Stack Framework Adapters (Universal & Language-Agnostic)
 
-SPS-CMS is designed to be framework-agnostic while utilizing the native superpowers of **Astro** and **Next.js**.
-
----
-
-## 1. Astro Adapter (Recommended)
-
-Astro is the gold standard for performance because regular visitors receive **0kb Admin JavaScript**, while admins get a rich interactive overlay.
-
-### Directory Structure for Astro
-```
-src/
-├── components/
-│   ├── cms/
-│   │   ├── AdminOverlay.tsx       # Interactive React Island (client:only="react")
-│   │   └── EditableText.tsx       # Live content editable wrapper
-├── lib/
-│   └── db.ts                      # MySQL/SQLite query layer
-├── pages/
-│   ├── admin/                     # Admin Dashboard Routes
-│   │   ├── index.astro
-│   │   ├── login.astro
-│   │   └── collections/
-│   │       └── [...path].astro
-│   ├── api/
-│   │   ├── auth/
-│   │   ├── cms/
-│   │   └── upload.ts
-│   ├── packages/
-│   │   ├── index.astro            # Archive query
-│   │   └── [slug].astro           # Dynamic detail query
-│   └── index.astro                # Home page with featured query
-```
-
-### Public Page Layout Pattern (`src/layouts/Layout.astro`)
-```astro
----
-import AdminOverlay from '../components/cms/AdminOverlay';
-const session = Astro.cookies.get('sps_admin_session');
-const isAdmin = Boolean(session && session.value);
----
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <slot name="seo" />
-  </head>
-  <body>
-    <!-- Live In-Context Editor Island (Only rendered for logged-in admin) -->
-    {isAdmin && <AdminOverlay client:only="react" pageSlug={Astro.url.pathname} />}
-    
-    <slot />
-  </body>
-</html>
-```
-
-### Dynamic Collection Detail Pattern (`src/pages/packages/[slug].astro`)
-```astro
----
-import Layout from '../../layouts/Layout.astro';
-import { getCollectionItemBySlug } from '../../lib/db';
-
-const { slug } = Astro.params;
-const packageItem = await getCollectionItemBySlug('packages', slug);
-
-if (!packageItem) {
-  return Astro.redirect('/404');
-}
----
-<Layout>
-  <main class="max-w-5xl mx-auto py-12 px-4">
-    <h1 class="text-4xl font-bold">{packageItem.title}</h1>
-    <div class="mt-4 text-2xl text-emerald-600 font-semibold">${packageItem.price}</div>
-    <img src={packageItem.featured_image} alt={packageItem.title} class="mt-6 w-full rounded-2xl" />
-    
-    <div class="mt-8 prose max-w-none">
-      <p>{packageItem.data.description}</p>
-    </div>
-
-    {packageItem.data.itinerary && (
-      <div class="mt-12">
-        <h2 class="text-2xl font-bold mb-6">Itinerary</h2>
-        <div class="space-y-4">
-          {packageItem.data.itinerary.map((day: any, idx: number) => (
-            <div class="border border-slate-200 p-4 rounded-xl">
-              <h3 class="font-bold text-lg">{day.title || `Day ${idx + 1}`}</h3>
-              <p class="text-slate-600 mt-2">{day.description}</p>
-            </div>
-          ))}
-        </div>
-      </div>
-    )}
-  </main>
-</Layout>
-```
+SPS-CMS is designed with a **Universal Decoupled Architecture**. It works seamlessly across **JavaScript/TypeScript, PHP, Python, Go, Ruby, and Vanilla HTML**.
 
 ---
 
-## 2. Next.js Adapter (App Router)
+## 1. JavaScript & TypeScript Stacks
 
-### Server Actions & Revalidation Pattern
-```typescript
-// app/actions/cms.ts
-'use server'
+### A. Astro 4/5+
+- **Rendering:** Island Architecture with `<AdminOverlay client:only="react" />` (0kb JS for public visitors).
+- **Backend:** Server Endpoints (`src/pages/api/cms/*.ts`) or `Astro Actions`.
+- **Database:** `mysql2/promise`, `better-sqlite3`, or `@libsql/client`.
 
-import { revalidatePath } from 'next/cache';
-import { saveCollectionItem } from '@/lib/db';
+### B. Next.js (App Router)
+- **Rendering:** React Server Components (RSC) + Client Island for Admin.
+- **Backend:** Next.js Server Actions with `revalidatePath()`.
+- **Database:** Direct DB queries inside `lib/db.ts`.
 
-export async function updatePackageAction(id: number, data: any) {
-  await saveCollectionItem('packages', id, data);
+### C. Nuxt.js 3 / Vue
+- **Rendering:** Universal SSR with `useAsyncData()` and `<AdminOverlay />` component.
+- **Backend:** Nitro Server Routes (`server/api/cms/*.ts`).
+
+### D. Svelte / SvelteKit
+- **Rendering:** SvelteKit Page Loaders (`+page.server.ts`).
+- **Backend:** Form Actions (`+page.server.ts`) or API Endpoints (`+server.ts`).
+
+---
+
+## 2. PHP Ecosystem (Laravel & Native PHP)
+
+### A. Modern Laravel 10/11
+- **Routes:** `routes/web.php` (`/admin`, `/api/cms/*`).
+- **Controllers:** `SpsCmsController.php` handling CRUD operations via Eloquent / DB Query Builder.
+- **Blade View Integration:**
+  ```html
+  <!-- resources/views/layouts/app.blade.php -->
+  @auth('admin')
+    <script src="/sps-cms/overlay.js" defer></script>
+  @endauth
   
-  // Instant CDN & cache revalidation
-  revalidatePath('/');
-  revalidatePath('/packages');
-  revalidatePath(`/packages/${data.slug}`);
-  
-  return { success: true };
-}
-```
+  <h1 data-sps-key="hero.title">{!! $pageContent['hero.title'] ?? 'Default Title' !!}</h1>
+  ```
+
+### B. Native PHP / cPanel Shared Hosting (Zero Framework)
+- **Single Drop-in API:** `api-cms.php` using standard `PDO` (MySQL/SQLite).
+- **Admin UI:** Lightweight standalone HTML/Tailwind SPA in `/admin/index.html`.
+
+---
+
+## 3. Python Ecosystem (Django & FastAPI / Flask)
+
+### A. Django 4/5
+- **Views:** Django Class-based or Functional Views querying models (`SpsCollection`, `SpsPage`).
+- **Templates:** Jinja2 / Django Templates with `data-sps-key` tags:
+  ```html
+  <h1 data-sps-key="home.headline">{{ page_content.headline|default:"Welcome" }}</h1>
+  ```
+
+### B. FastAPI / Flask
+- **Endpoints:** Async routes (`/api/cms/save-page`, `/api/cms/collections`) querying SQLAlchemy or Peewee.
+
+---
+
+## 4. Go Ecosystem (Fiber / Gin / Echo)
+
+- **Handlers:** REST handlers executing SQL queries via `database/sql` + `sqlx` or `gorm`.
+- **HTML Templates:** Go `html/template` with standard `data-sps-key` attributes.
+
+---
+
+## 5. Vanilla Static HTML & Jamstack (Pure HTML + CSS + JS)
+
+For ultra-lightweight static websites hosted on any web server (Apache, Nginx, GitHub Pages, Netlify):
+1. Public HTML pages include the zero-dependency script:
+   ```html
+   <script src="/sps-cms/overlay.js"></script>
+   ```
+2. Elements marked with `data-sps-key="about.heading"` are made live-editable when logged in.
+3. Content loads from a lightweight SQLite database or JSON file.

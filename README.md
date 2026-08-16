@@ -1,17 +1,17 @@
-# ⚡ SPS-CMS (Universal, Cross-Platform & Self-Locking)
+# ⚡ SPS-CMS (Universal, Multi-Language & Self-Locking)
 
-> **Master Universal Visual & Collection CMS Architect for Modern Web Stacks (Astro & Next.js)**  
-> *Native support for Windows (7, 8, 10, 11), macOS, and Linux across Antigravity, Claude Code, Cursor, Windsurf, OpenCode, Codex, and Skills.sh CLI.*
+> **Master Universal Visual & Collection CMS Architect for ALL Web Stacks**  
+> *Supports JavaScript/TypeScript (Astro, Next.js, Nuxt/Vue, SvelteKit), PHP (Laravel, Native), Python (Django, FastAPI), Go, Ruby, and Vanilla HTML across Windows (7/8/10/11), macOS, and Linux.*
 
 ---
 
 ## 🌟 Why SPS-CMS?
 
-Modern web development with **Astro** and **Next.js** produces blindingly fast websites, but developers consistently struggle with client content management:
+Modern web development produces fast websites, but developers consistently struggle with client content management across different languages:
 - **Headless CMS SaaS** (Sanity, Contentful, Strapi Cloud) introduce costly monthly subscriptions and confusing forms that alienate non-technical clients.
 - **WordPress** offers great non-coder visual editing, but brings heavy PHP bloat, slow database queries, and plugin security vulnerabilities.
 
-**SPS-CMS solves this permanently on ANY OS, ANY host, and ANY industry.** It equips AI coding agents (**Antigravity, Claude Code, Cursor, Windsurf**) to discover the client's hosting plan, choose the optimal local database engine, model any bulk industry data, and scaffold a clean, WordPress/Shopify-grade CMS directly inside the client's own codebase.
+**SPS-CMS solves this permanently for ANY programming language, ANY framework, and ANY hosting platform.** It equips AI coding agents (**Antigravity, Claude Code, Cursor, Windsurf**) to detect the project stack, choose the optimal local database engine, model any bulk industry data, and scaffold a clean, WordPress/Shopify-grade CMS directly inside the client's own codebase.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -26,16 +26,18 @@ Modern web development with **Astro** and **Next.js** produces blindingly fast w
 │ 3. ADMIN LAYER (/admin) - The Dual-Engine Experience                   │
 │    ┌──────────────────────────────────┬──────────────────────────────┐ │
 │    │ Engine A: Visual In-Context      │ Engine B: Collection Manager │ │
-│    │ • Click-to-edit inline text      │ • Real Estate, Doctors,      │ │
-│    │ • Image swap with preview        │   Tours, Products, Dishes... │ │
-│    │ • Section toggle & reordering    │ • Searchable Data Tables     │ │
-│    │ • Locked design token safety     │ • Inspector Sidebar & Slugs  │ │
+│    │ • Zero-dep Vanilla JS Overlay    │ • Real Estate, Doctors,      │ │
+│    │ • Click-to-edit inline text      │   Tours, Products, Dishes... │ │
+│    │ • Image swap with preview        │ • Searchable Data Tables     │ │
+│    │ • Works on ANY backend HTML page │ • Inspector Sidebar & Slugs  │ │
 │    └──────────────────────────────────┴──────────────────────────────┘ │
 ├────────────────────────────────────────────────────────────────────────┤
-│ 4. FRONTEND ENGINE (Astro / Next.js)                                   │
-│    • Astro Islands (<AdminOverlay client:only="react" />)              │
-│    • 0kb Admin JS overhead for regular visitors                        │
-│    • Server Actions / Direct DB Queries (Instant Revalidation)         │
+│ 4. MULTI-STACK BACKEND ENGINE                                          │
+│    • JS/TS: Astro, Next.js, Nuxt 3 (Vue), SvelteKit, Remix             │
+│    • PHP: Modern Laravel, Native PHP / PDO (cPanel Shared)             │
+│    • Python: Django, FastAPI, Flask, Jinja2 Templates                 │
+│    • Go: Fiber, Gin, html/template                                     │
+│    • Static / Jamstack: Pure HTML5 + CSS + Alpine.js                   │
 ├────────────────────────────────────────────────────────────────────────┤
 │ 5. SELF-ENFORCING REPOSITORY LOCK & CROSS-PLATFORM COMPATIBILITY       │
 │    • Windows (7, 8, 10, 11) PowerShell + macOS / Linux Zsh / Bash      │
@@ -67,54 +69,33 @@ curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/ins
 
 ---
 
-## 🎯 Target Installation Paths
-
-| AI Host | Windows Path | macOS / Linux Path |
-| :--- | :--- | :--- |
-| **Antigravity (Gemini)** | `%USERPROFILE%\.gemini\config\skills\sps-cms` | `~/.gemini/config/skills/sps-cms` |
-| **Claude Code** | `%USERPROFILE%\.claude\skills\sps-cms` | `~/.claude/skills/sps-cms` |
-| **Cursor IDE** | `%USERPROFILE%\.cursor\skills\sps-cms` | `~/.cursor/skills/sps-cms` |
-| **Windsurf / Cascade** | `%USERPROFILE%\.windsurf\skills\sps-cms` | `~/.windsurf/skills/sps-cms` |
-| **Universal / Codex / Copilot** | `%USERPROFILE%\.agents\skills\sps-cms` | `~/.agents/skills/sps-cms` |
-| **OpenCode** | `%USERPROFILE%\.config\opencode\skills\sps-cms` | `~/.config/opencode/skills/sps-cms` |
-
----
-
 ## 💎 Core Superpowers
 
 ### 0. Self-Enforcing Project Lock (Permanent Memory)
 When `/sps-cms` is run in a project, it writes `.sps-cms/lock.json` and injects root mirror rules into `GEMINI.md` / `AGENTS.md` / `CLAUDE.md`. In all future conversations, whenever the user asks for CMS features or edits, the agent **is hard-locked to use `sps-cms`** rather than reverting to generic forms.
 
-### 1. Mandatory Hosting & Infrastructure Discovery Grill
-Before generating CMS code, the agent confirms:
-1. **Deploy Target:** Shared/cPanel, VPS (Docker/PM2), Edge (Cloudflare Pages), Serverless (Vercel, Netlify), or PaaS (Railway, Render).
-2. **Database Engine:** Native MySQL, PostgreSQL, Embedded SQLite, Cloudflare D1, or LibSQL.
-3. **Media Strategy:** Local disk (`/public/uploads`), Cloudflare R2, or S3 bucket.
-4. **Content Inventory:** What bulk collections and custom fields are required.
+### 1. 100% Multi-Language & Multi-Framework Support
+Works with zero friction on:
+- **Astro / Next.js / Nuxt 3 / SvelteKit / React / Vue**
+- **Laravel / Native PHP (cPanel Shared Hosting)**
+- **Django / FastAPI / Flask (Python)**
+- **Go (Fiber / Gin)**
+- **Pure HTML / CSS / Alpine.js**
 
-### 2. 100% Polymorphic Bulk Collection Engine
-Model **ANY bulk entity** for **ANY industry** in `cms.config.ts`:
-- **Real Estate:** Properties, Floor Plans, Agents, Amenities.
-- **Healthcare & Clinics:** Doctors, Departments, Patient Reviews.
-- **Restaurants & Cafes:** Menu Categories, Dishes, Chef Specials.
-- **Tourism & Travel:** Tour Packages, Destinations, Itineraries.
-- **SaaS & Tech:** Features, Case Studies, Changelog, Pricing.
-- **Education:** Courses, Lessons, Instructors, Batches.
-- **Agency & Portfolio:** Projects, Case Studies, Team Members.
+### 2. Universal Zero-Dependency Visual In-Context Editor
+The client-side visual editor runs via a lightweight `<script src="/sps-cms/overlay.js"></script>` that works on **ANY HTML page generated by ANY programming language**, allowing non-technical clients to click-and-edit text and swap images live on their website.
 
-### 3. The Dual-Engine Admin Experience
-- **Engine A (Visual In-Context Page Editor):** For static text, hero banners, about narratives, and footer links. Admins click on text to edit inline and swap images live on the public page.
-- **Engine B (Centralized Collection Manager):** Dedicated WordPress/Shopify-style searchable Data Tables and structured two-column Add/Edit forms with inspector sidebars, auto-slugs, and visibility switches (`Show on Homepage`, `Featured`).
+### 3. 100% Polymorphic Bulk Collection Engine
+Model **ANY bulk entity** for **ANY industry** (Real Estate, Clinics, Restaurants, Tourism, SaaS, Education, Agency).
 
 ---
 
 ## 🛠️ Operating Modes
 
-- `/sps-cms scaffold` — Initialize CMS config, database connectors, auth, `/admin` routes, and project lock.
-- `/sps-cms add-collection <name>` — Add a new bulk collection (e.g. `properties`, `doctors`, `courses`) with custom fields.
+- `/sps-cms scaffold` — Detect stack, initialize CMS config, database connectors, auth, `/admin` routes, and project lock.
+- `/sps-cms add-collection <name>` — Add a new bulk collection for the detected language/framework.
 - `/sps-cms doctor` — Run project & environment diagnostics.
-- `/sps-cms sync` — Audit and repair existing CMS implementation, re-verifying root lock and single source of truth.
-- `/sps-cms verify` — Run full roundtrip test (Create ➜ Edit ➜ Auto-Sync Verification ➜ Media Asset Check).
+- `/sps-cms verify` — Run full roundtrip test.
 
 ---
 
