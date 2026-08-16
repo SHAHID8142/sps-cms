@@ -1,17 +1,18 @@
 # ⚡ SPS-CMS (Universal, Multi-Language, Gemini Flash AI & Self-Locking)
 
-> **Master Universal Visual & Collection CMS Architect with Native Gemini Flash AI Auto-Translation**  
-> *Supports JavaScript/TypeScript (Astro, Next.js, Nuxt/Vue, SvelteKit), PHP (Laravel, Native), Python (Django, FastAPI), Go, Ruby, and Vanilla HTML with Field-Level Localization (English, Bengali, Arabic RTL, etc.) & Instant AI Translation Sync.*
+> **Master Universal Visual & Collection CMS Architect with In-Context Popover Inspector & Gemini Flash AI Auto-Translation**  
+> *Supports JavaScript/TypeScript (Astro, Next.js, Nuxt/Vue, SvelteKit), PHP (Laravel, Native), Python (Django, FastAPI), Go, Ruby, and Vanilla HTML with Field-Level Localization (English, Bengali, Arabic RTL, etc.) & Zero-Redirection Link/CTA Inspectors.*
 
 ---
 
 ## 🌟 Why SPS-CMS?
 
-Modern web development produces fast websites, but developers consistently struggle with client content management across different languages:
+Modern web development produces fast websites, but developers consistently struggle with client content management across different languages and visual layouts:
 - **Headless CMS SaaS** (Sanity, Contentful, Strapi Cloud) introduce costly monthly subscriptions and confusing forms.
 - **WordPress Translation Plugins** (WPML/Polylang) require manual duplicate entries or expensive translation add-ons.
+- **Broken Live Editors** often accidentally redirect clients when clicking interactive buttons or links.
 
-**SPS-CMS solves this with Native Gemini Flash AI Auto-Translation.** When a client creates or edits a product, package, or page in one language, Gemini Flash automatically translates and synchronizes across Bengali, Arabic (RTL), and any other target language in under 300 milliseconds.
+**SPS-CMS solves this with an Interactive In-Context Inspector Popover & Gemini Flash AI.** In Edit Mode, clicking any CTA, button, or link opens an instant floating inspector to edit both the visible text and the destination URL (`/packages`, external links, `_blank` target) with zero accidental page redirection!
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -23,12 +24,13 @@ Modern web development produces fast websites, but developers consistently strug
 │    • PostgreSQL / Neon / Supabase │    • Zero Third-Party Monthly Fee  │
 │    • Cloudflare D1 (Edge Native)  │                                    │
 ├───────────────────────────────────┴────────────────────────────────────┤
-│ 3. MULTI-LANGUAGE (i18n), RTL & GEMINI FLASH AI TRANSLATION            │
+│ 3. IN-CONTEXT INSPECTOR & DUAL-ENGINE ADMIN (/admin)                   │
 │    ┌──────────────────────────────────┬──────────────────────────────┐ │
 │    │ Engine A: Visual In-Context      │ Engine B: Collection Manager │ │
-│    │ • Zero-dep Vanilla JS Overlay    │ • Language Tabs (EN, BN, AR) │ │
-│    │ • Live edit active locale route  │ • [✨ Gemini Flash Auto-Sync]│ │
-│    │ • Auto RTL text alignment        │ • Instant Save & Fallback    │ │
+│    │ • Popover Inspector for CTAs     │ • Language Tabs (EN, BN, AR) │ │
+│    │ • Edit Label + Link Destination  │ • [✨ Gemini Flash Auto-Sync]│ │
+│    │ • Zero accidental redirection    │ • Real Estate, Doctors, Tours│ │
+│    │ • Instant save & publish         │ • Searchable Data Tables     │ │
 │    └──────────────────────────────────┴──────────────────────────────┘ │
 ├────────────────────────────────────────────────────────────────────────┤
 │ 4. MULTI-STACK BACKEND ENGINE                                          │
@@ -70,16 +72,17 @@ curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/ins
 
 ## 💎 Core Superpowers
 
-### 0. Native Gemini Flash AI Auto-Translation
-- **One-Click Instant Translation:** Client types in English ➜ Clicks `[ ✨ Auto-Translate with Gemini Flash ]` ➜ Bengali (বাংলা) and Arabic (العربية RTL) are populated in ~300ms.
-- **Field-Level JSON Localization:** Clean, performant, non-bloated database architecture.
-- **Automatic Fallback:** Missing translations automatically render default language with zero broken layouts.
+### 0. Floating Contextual Popover Inspector for CTAs & Links
+- **Zero Accidental Redirection:** In Edit Mode, clicking any CTA or link will NEVER reload or navigate the browser.
+- **Full Link Control:** Edit the button text, destination URL (`/packages`, `/#services`, WhatsApp links), and target mode (`_blank` new tab).
+- **Live Preview:** Immediate in-DOM updates with one-click `[ 🚀 Publish All Changes ]`.
 
-### 1. Self-Enforcing Project Lock (Permanent Memory)
-When `/sps-cms` is run in a project, it writes `.sps-cms/lock.json` and injects root mirror rules into `GEMINI.md` / `AGENTS.md` / `CLAUDE.md`. The agent **is permanently locked to use `sps-cms`** for all future CMS work in that repository.
+### 1. Native Gemini Flash AI Auto-Translation
+- **One-Click Translation:** Client types in English ➜ Clicks `[ ✨ Auto-Translate with Gemini Flash ]` ➜ Bengali (বাংলা) and Arabic (العربية RTL) are populated in ~300ms.
+- **Field-Level JSON Localization:** Clean database architecture with zero table bloat.
 
-### 2. 100% Multi-Language & Multi-Framework Support
-Works on Astro, Next.js, Nuxt/Vue, SvelteKit, Laravel (PHP), Django/FastAPI (Python), Go, and Pure HTML.
+### 2. Self-Enforcing Project Lock (Permanent Memory)
+When `/sps-cms` is run in a project, it writes `.sps-cms/lock.json` and injects root mirror rules into `GEMINI.md` / `AGENTS.md` / `CLAUDE.md`.
 
 ---
 
