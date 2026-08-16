@@ -1,7 +1,7 @@
-# ⚡ SPS-CMS (Universal, Host-Agnostic & Self-Locking)
+# ⚡ SPS-CMS (Universal, Cross-Platform & Self-Locking)
 
 > **Master Universal Visual & Collection CMS Architect for Modern Web Stacks (Astro & Next.js)**  
-> *Self-Enforcing Project Memory Lock (GEMINI.md / AGENTS.md), Zero SaaS lock-in, 100% Client-Owned Hosting & DBs (MySQL, Postgres, SQLite, Cloudflare D1), Universal Polymorphic Collections, Dual-Engine Admin, and Zero-Bug Auto-Sync.*
+> *Native support for Windows (7, 8, 10, 11), macOS, and Linux across Antigravity, Claude Code, Cursor, Windsurf, OpenCode, and Codex.*
 
 ---
 
@@ -11,7 +11,7 @@ Modern web development with **Astro** and **Next.js** produces blindingly fast w
 - **Headless CMS SaaS** (Sanity, Contentful, Strapi Cloud) introduce costly monthly subscriptions and confusing forms that alienate non-technical clients.
 - **WordPress** offers great non-coder visual editing, but brings heavy PHP bloat, slow database queries, and plugin security vulnerabilities.
 
-**SPS-CMS solves this permanently across any host, any industry, and all AI coding agents.** Once activated in a repository, it **locks the project standard** so agents (Antigravity, Claude Code, Cursor, Windsurf) never forget or deviate on future CMS tasks.
+**SPS-CMS solves this permanently on ANY OS, ANY host, and ANY industry.** It equips AI coding agents (**Antigravity, Claude Code, Cursor, Windsurf**) to discover the client's hosting plan, choose the optimal local database engine, model any bulk industry data, and scaffold a clean, WordPress/Shopify-grade CMS directly inside the client's own codebase.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
@@ -37,29 +37,42 @@ Modern web development with **Astro** and **Next.js** produces blindingly fast w
 │    • 0kb Admin JS overhead for regular visitors                        │
 │    • Server Actions / Direct DB Queries (Instant Revalidation)         │
 ├────────────────────────────────────────────────────────────────────────┤
-│ 5. SELF-ENFORCING REPOSITORY LOCK                                      │
+│ 5. SELF-ENFORCING REPOSITORY LOCK & CROSS-PLATFORM COMPATIBILITY       │
+│    • Windows (7, 8, 10, 11) PowerShell + macOS / Linux Zsh / Bash      │
 │    • Injects Lock into GEMINI.md / AGENTS.md / CLAUDE.md / .cursorrules│
-│    • Ensures AI agents strictly adhere to sps-cms in all future tasks  │
 └────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
 
-## 🚀 Quick Install
+## 🚀 1-Click Cross-Platform Installation
 
-### One-Line Automated Installer
-Run this command in your terminal to install `sps-cms` across all your AI agent environments:
+### 🪟 Windows (PowerShell 1-Click)
+Open PowerShell and run:
+
+```powershell
+irm https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/install.ps1 | iex
+```
+
+### 🍎 macOS & 🐧 Linux / WSL (Terminal 1-Click)
+Open Terminal and run:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/install.sh | bash
 ```
 
-Supported AI Hosts:
-- **Antigravity / Gemini:** `~/.gemini/config/skills/sps-cms`
-- **Claude Code:** `~/.claude/skills/sps-cms`
-- **Cursor IDE:** `~/.cursor/skills/sps-cms`
-- **Windsurf / Cascade:** `~/.windsurf/skills/sps-cms`
-- **OpenCode / Codex / Copilot:** `~/.agents/skills/sps-cms`
+---
+
+## 🎯 Target Installation Paths
+
+| AI Host | Windows Path | macOS / Linux Path |
+| :--- | :--- | :--- |
+| **Antigravity (Gemini)** | `%USERPROFILE%\.gemini\config\skills\sps-cms` | `~/.gemini/config/skills/sps-cms` |
+| **Claude Code** | `%USERPROFILE%\.claude\skills\sps-cms` | `~/.claude/skills/sps-cms` |
+| **Cursor IDE** | `%USERPROFILE%\.cursor\skills\sps-cms` | `~/.cursor/skills/sps-cms` |
+| **Windsurf / Cascade** | `%USERPROFILE%\.windsurf\skills\sps-cms` | `~/.windsurf/skills/sps-cms` |
+| **Universal / Codex / Copilot** | `%USERPROFILE%\.agents\skills\sps-cms` | `~/.agents/skills/sps-cms` |
+| **OpenCode** | `%USERPROFILE%\.config\opencode\skills\sps-cms` | `~/.config/opencode/skills/sps-cms` |
 
 ---
 
@@ -88,13 +101,6 @@ Model **ANY bulk entity** for **ANY industry** in `cms.config.ts`:
 ### 3. The Dual-Engine Admin Experience
 - **Engine A (Visual In-Context Page Editor):** For static text, hero banners, about narratives, and footer links. Admins click on text to edit inline and swap images live on the public page.
 - **Engine B (Centralized Collection Manager):** Dedicated WordPress/Shopify-style searchable Data Tables and structured two-column Add/Edit forms with inspector sidebars, auto-slugs, and visibility switches (`Show on Homepage`, `Featured`).
-
-### 4. Single Source of Truth & Auto-Sync
-- Editing any bulk item in `/admin` immediately reflects across:
-  - **Homepage Featured Grid** (via `Show on Homepage` toggle).
-  - **Category / Archive Grids**.
-  - **Single Detail Pages** (`/[collection]/[slug]`).
-- Auto-generates clean, conflict-free URL slugs to eliminate 404 errors.
 
 ---
 

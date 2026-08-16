@@ -1,57 +1,60 @@
-# Installing and Managing SPS-CMS
+# Installing and Managing SPS-CMS (Cross-Platform)
 
-`sps-cms` is a cross-agent, portable skill that can be installed on Mac, Linux, and Windows across any skills-compatible agent host.
+`sps-cms` is 100% cross-platform and natively supports **Windows (7, 8, 10, 11)**, **macOS**, and **Linux/WSL** across all major AI agent environments.
 
 ---
 
-## 1. Quick One-Line Install (Recommended)
+## 🪟 Windows 1-Click Install (PowerShell)
 
-Run this single command in your terminal:
+Open PowerShell on Windows (Run as normal user or administrator) and execute:
+
+```powershell
+irm https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/install.ps1 | iex
+```
+
+*(Works on Windows 7, 8, 10, and 11 with PowerShell 3.0, 5.1, or 7+)*
+
+### Windows Update & Uninstall
+- **To Update:**
+  ```powershell
+  irm https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/update.ps1 | iex
+  ```
+- **To Uninstall:**
+  ```powershell
+  irm https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/uninstall.ps1 | iex
+  ```
+
+---
+
+## 🍎 macOS & 🐧 Linux / WSL 1-Click Install (Bash / Zsh)
+
+Open Terminal and execute:
 
 ```bash
 curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/install.sh | bash
 ```
 
-This automatically detects your installed agent hosts and places the skill in the appropriate path:
-- **Antigravity / Gemini:** `~/.gemini/config/skills/sps-cms`
-- **Claude Code:** `~/.claude/skills/sps-cms`
-- **Cursor:** `~/.cursor/skills/sps-cms`
-- **Windsurf:** `~/.windsurf/skills/sps-cms`
-- **Universal / Codex / Copilot:** `~/.agents/skills/sps-cms`
+### macOS/Linux Update & Uninstall
+- **To Update:**
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/update.sh | bash
+  ```
+- **To Uninstall:**
+  ```bash
+  curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/uninstall.sh | bash
+  ```
 
 ---
 
-## 2. Manual Git Clone Install
+## 🎯 Target Installation Locations
 
-If you prefer to install manually:
+The installer automatically detects and deploys `sps-cms` to all installed coding agents:
 
-```bash
-# For Antigravity
-git clone https://github.com/SHAHID8142/sps-cms.git ~/.gemini/config/skills/sps-cms
-
-# For Claude Code
-git clone https://github.com/SHAHID8142/sps-cms.git ~/.claude/skills/sps-cms
-
-# For Cursor
-git clone https://github.com/SHAHID8142/sps-cms.git ~/.cursor/skills/sps-cms
-```
-
----
-
-## 3. Updating SPS-CMS
-
-To update to the latest release:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/update.sh | bash
-```
-
----
-
-## 4. Uninstalling SPS-CMS
-
-To remove the skill completely:
-
-```bash
-curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/uninstall.sh | bash
-```
+| AI Host | Windows Path | macOS / Linux Path |
+| :--- | :--- | :--- |
+| **Antigravity (Gemini)** | `%USERPROFILE%\.gemini\config\skills\sps-cms` | `~/.gemini/config/skills/sps-cms` |
+| **Claude Code** | `%USERPROFILE%\.claude\skills\sps-cms` | `~/.claude/skills/sps-cms` |
+| **Cursor IDE** | `%USERPROFILE%\.cursor\skills\sps-cms` | `~/.cursor/skills/sps-cms` |
+| **Windsurf / Cascade** | `%USERPROFILE%\.windsurf\skills\sps-cms` | `~/.windsurf/skills/sps-cms` |
+| **Universal / Codex / Copilot** | `%USERPROFILE%\.agents\skills\sps-cms` | `~/.agents/skills/sps-cms` |
+| **OpenCode** | `%USERPROFILE%\.config\opencode\skills\sps-cms` | `~/.config/opencode/skills/sps-cms` |
