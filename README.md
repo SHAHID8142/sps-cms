@@ -1,7 +1,7 @@
 # ⚡ SPS-CMS (Universal, Cross-Platform & Self-Locking)
 
 > **Master Universal Visual & Collection CMS Architect for Modern Web Stacks (Astro & Next.js)**  
-> *Native support for Windows (7, 8, 10, 11), macOS, and Linux across Antigravity, Claude Code, Cursor, Windsurf, OpenCode, and Codex.*
+> *Native support for Windows (7, 8, 10, 11), macOS, and Linux across Antigravity, Claude Code, Cursor, Windsurf, OpenCode, Codex, and Skills.sh CLI.*
 
 ---
 
@@ -39,6 +39,7 @@ Modern web development with **Astro** and **Next.js** produces blindingly fast w
 ├────────────────────────────────────────────────────────────────────────┤
 │ 5. SELF-ENFORCING REPOSITORY LOCK & CROSS-PLATFORM COMPATIBILITY       │
 │    • Windows (7, 8, 10, 11) PowerShell + macOS / Linux Zsh / Bash      │
+│    • Skills.sh Package Manager (npx skills add SHAHID8142/sps-cms)     │
 │    • Injects Lock into GEMINI.md / AGENTS.md / CLAUDE.md / .cursorrules│
 └────────────────────────────────────────────────────────────────────────┘
 ```
@@ -47,16 +48,19 @@ Modern web development with **Astro** and **Next.js** produces blindingly fast w
 
 ## 🚀 1-Click Cross-Platform Installation
 
-### 🪟 Windows (PowerShell 1-Click)
-Open PowerShell and run:
+### ⚡ Method 1: Via Skills.sh CLI (`npx skills`)
+```bash
+npx skills add SHAHID8142/sps-cms
+```
 
+### 🪟 Method 2: Windows (PowerShell 1-Click)
+Open PowerShell and run:
 ```powershell
 irm https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/install.ps1 | iex
 ```
 
-### 🍎 macOS & 🐧 Linux / WSL (Terminal 1-Click)
+### 🍎 Method 3: macOS & 🐧 Linux / WSL (Terminal 1-Click)
 Open Terminal and run:
-
 ```bash
 curl -fsSL https://raw.githubusercontent.com/SHAHID8142/sps-cms/main/scripts/install.sh | bash
 ```
@@ -108,6 +112,7 @@ Model **ANY bulk entity** for **ANY industry** in `cms.config.ts`:
 
 - `/sps-cms scaffold` — Initialize CMS config, database connectors, auth, `/admin` routes, and project lock.
 - `/sps-cms add-collection <name>` — Add a new bulk collection (e.g. `properties`, `doctors`, `courses`) with custom fields.
+- `/sps-cms doctor` — Run project & environment diagnostics.
 - `/sps-cms sync` — Audit and repair existing CMS implementation, re-verifying root lock and single source of truth.
 - `/sps-cms verify` — Run full roundtrip test (Create ➜ Edit ➜ Auto-Sync Verification ➜ Media Asset Check).
 
