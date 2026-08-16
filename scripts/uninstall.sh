@@ -2,7 +2,7 @@
 set -e
 
 # ==============================================================================
-# SPS-CMS Skill Uninstaller
+# ⚡ SPS-CMS Skill Uninstaller
 # ==============================================================================
 
 SKILL_NAME="sps-cms"
@@ -12,10 +12,12 @@ TARGET_DIRS=(
   "$HOME/.claude/skills/$SKILL_NAME"
   "$HOME/.cursor/skills/$SKILL_NAME"
   "$HOME/.windsurf/skills/$SKILL_NAME"
+  "$HOME/.codeium/windsurf/skills/$SKILL_NAME"
+  "$HOME/.config/opencode/skills/$SKILL_NAME"
   "$HOME/.agents/skills/$SKILL_NAME"
 )
 
-echo "🗑️ [SPS-CMS] Uninstalling from all agent environments..."
+echo "🗑️ [SPS-CMS] Removing skill from all agent directories..."
 
 for TARGET in "${TARGET_DIRS[@]}"; do
   if [ -d "$TARGET" ]; then
@@ -24,4 +26,4 @@ for TARGET in "${TARGET_DIRS[@]}"; do
   fi
 done
 
-echo "✨ [SPS-CMS] Successfully uninstalled."
+echo "✨ [SPS-CMS] Successfully uninstalled from all agent environments."
