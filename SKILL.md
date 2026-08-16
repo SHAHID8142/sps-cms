@@ -1,19 +1,20 @@
 ---
 name: sps-cms
 description: >
-  Master self-contained Visual & Collection CMS architect for modern web stacks
-  (Astro, Next.js). Enforces zero-SaaS/zero-subscription local database architecture
-  (Hostinger/cPanel MySQL, SQLite), WordPress/Shopify-grade dual-engine admin
-  (/admin with In-Context Page Editor + Dedicated Collection Manager), single source
-  of truth auto-sync, local media storage (/public/uploads), and strict roundtrip
-  verification across Antigravity, Claude, Cursor, Windsurf, and other coding agents.
+  Universal, host-agnostic, and industry-polymorphic Visual & Collection CMS architect
+  for modern web stacks (Astro, Next.js). Features mandatory host & database discovery
+  (cPanel/Shared, VPS/Docker, Vercel, Cloudflare Pages/D1, Node/PM2), zero-SaaS self-contained
+  DB adapters (MySQL, PostgreSQL, SQLite, LibSQL, D1), universal bulk collection engine
+  (Packages, Products, Real Estate, Doctors, Menu Items, Case Studies, Courses, etc.),
+  WordPress/Shopify-grade dual-engine admin (/admin + In-Context Live Editor), single source
+  of truth auto-sync, host-native media uploads, and strict roundtrip verification.
 ---
 
-# /sps-cms
+# /sps-cms (Universal & Host-Agnostic)
 
-`/sps-cms` is the authoritative architecture, implementation, and verification standard for building **high-performance, non-technical client-friendly CMS systems** in modern frameworks (**Astro**, **Next.js**).
+`/sps-cms` is the universal architecture, implementation, and verification standard for building **high-performance, non-technical client-friendly CMS systems** in modern frameworks (**Astro**, **Next.js**) on **ANY hosting platform** and for **ANY business industry**.
 
-Read [METHOD-CARD.md](METHOD-CARD.md) at the start of any CMS task.
+Read [METHOD-CARD.md](METHOD-CARD.md) at the start of every session.
 
 Current skill version: read `VERSION` and record in project memory.
 
@@ -21,107 +22,79 @@ Current skill version: read `VERSION` and record in project memory.
 
 ## Core Laws of SPS-CMS
 
-1. **Zero External SaaS / 100% Client-Owned DB Law.**
-   - Never force clients onto paid third-party CMS SaaS (e.g. Sanity, Contentful) or developer-held cloud databases (e.g. personal Supabase accounts).
-   - All data MUST reside on the client's own hosting infrastructure using **Native MySQL (Hostinger/cPanel/VPS)** or **SQLite / local LibSQL**.
-   - Media uploads MUST save directly to the client's local server directory (`/public/uploads`) or client-owned S3/R2 storage with zero third-party lock-in.
+1. **Mandatory Hosting & Infrastructure Discovery Law (No Assumptions).**
+   - The agent MUST NEVER assume a specific host or database.
+   - Before writing any CMS code, the agent MUST grill and confirm with the user:
+     1. **Deploy Target:** Shared/cPanel (Hostinger, cPanel, DirectAdmin), VPS/Dedicated (PM2, Docker, Nginx), Serverless/Edge (Vercel, Cloudflare Pages, Netlify, Railway, Render).
+     2. **Database Engine:** Native MySQL/MariaDB, PostgreSQL, Embedded SQLite, Cloudflare D1, or Turso/LibSQL.
+     3. **Media Storage:** Local server disk (`/public/uploads`), Cloudflare R2, or S3-compatible bucket.
+     4. **Content Inventory:** What bulk collections exist (e.g. Properties, Tours, Courses, Doctors, Dishes, Projects, Products)?
 
-2. **The Dual-Engine Admin Law (`/admin`).**
-   Every CMS MUST provide two crystal-clear editing experiences:
-   - **Engine A (Visual In-Context Page Editor):** For static/singleton pages (Home, About, Contact, Footer). Clients click text to edit inline and click images to swap them with zero layout breakage.
-   - **Engine B (Centralized Collection/Entity Manager):** For multi-item dynamic content (Travel Packages, Products, Services, Portfolio, Blog). Implements clean WordPress/Shopify-style searchable, filterable Data Tables and dedicated Add/Edit forms with auto-generated slugs and inspector sidebars.
+2. **Zero Forced SaaS / 100% Client-Owned Infrastructure Law.**
+   - All data and media MUST reside on infrastructure paid for and owned by the client.
+   - No forced monthly subscriptions (e.g. Sanity/Contentful) and no developer-held database lock-in.
 
-3. **Single Source of Truth & Auto-Sync Law.**
-   - Dynamic entities (Packages/Products) updated in the Collection Manager MUST automatically propagate everywhere:
-     - Homepage Featured Grid (via switches like `show_on_homepage = 1`).
-     - Archive / Category Listing Grids.
-     - Single Detail Pages (`/[collection]/[slug]`).
-   - Slugs MUST be auto-generated from titles, sanitized, and guaranteed unique to eliminate 404 errors.
+3. **Universal Polymorphic Collection Law (Industry Agnostic).**
+   - The CMS is not restricted to predefined entities. It can model **ANY bulk/repeat data** for any industry:
+     - *Real Estate:* Properties, Floor Plans, Agents, Amenities.
+     - *Healthcare / Clinic:* Doctors, Specialties, Services, Schedules.
+     - *Restaurant / Cafe:* Menu Categories, Dishes, Specials, Ingredients.
+     - *Travel & Tourism:* Tour Packages, Destinations, Itineraries, Guides.
+     - *SaaS / Digital:* Features, Changelog, Case Studies, Pricing Tiers.
+     - *E-Commerce & Retail:* Products, Categories, Variants, Inventory.
+     - *Education:* Courses, Lessons, Instructors, Batches.
+     - *Agency & Portfolio:* Projects, Case Studies, Team Members, Testimonials.
+   - Any collection defined in `cms.config.ts` automatically generates its dedicated sidebar tab, searchable Data Table, Add/Edit form, auto-slug, and frontend query.
 
-4. **SPS Ecosystem Interoperability Law.**
-   - When `./.sps/` memory exists in the project (or when the project is orchestrated by `/sps`):
-     - `sps-cms` MUST automatically sync with `./.sps/cms-foundation.md`, `./.sps/content-model.md`, and `./.sps/cms-debt.md`.
-     - Storefront and CMS controls MUST ship together (CMS Coupling).
-   - When used in a standalone project without `/sps`, `sps-cms` functions as a complete self-contained CMS builder.
+4. **The Dual-Engine Admin Law (`/admin`).**
+   Every site provides two complementary editing paradigms:
+   - **Engine A (Visual In-Context Page Editor):** For singleton page copy, hero headlines, about text, contact info. Client clicks text to edit and clicks images to swap live on the public page without breaking design tokens.
+   - **Engine B (Centralized Collection Manager):** For bulk/repeat items. Dedicated Shopify/WordPress-style searchable Data Tables and structured two-column Add/Edit forms with inspector sidebars and auto-slugs.
 
-5. **Mandatory Roundtrip DoD (Zero-Bug Delivery).**
-   - No CMS task is complete without passing the [ROUNDTRIP-VERIFICATION.md](ROUNDTRIP-VERIFICATION.md) gate:
-     1. Seed / create item via `/admin`.
-     2. Update values (title, price, image, toggle).
-     3. Verify real-time reflection on Homepage, Archive, and Detail pages.
-     4. Verify mobile responsiveness and image asset load.
+5. **Single Source of Truth & Auto-Sync Law.**
+   - Updating any bulk item in `/admin` immediately reflects across:
+     - **Homepage Featured Grids** (via switches like `show_on_homepage = 1`).
+     - **Archive / Category Grids**.
+     - **Dynamic Single Detail Pages** (`/[collection]/[slug]`).
+   - Slugs MUST be auto-generated, sanitized, and collision-proof to ensure zero 404 errors.
+
+6. **SPS Ecosystem Interoperability Law.**
+   - When `./.sps/` exists, `sps-cms` binds directly to `./.sps/cms-foundation.md` and `./.sps/content-model.md`.
+   - When used standalone, `sps-cms` operates as an independent full-stack CMS engine.
+
+7. **Mandatory Roundtrip DoD (Zero-Bug Delivery).**
+   - Every CMS feature requires passing the 5-point [ROUNDTRIP-VERIFICATION.md](ROUNDTRIP-VERIFICATION.md) gate with documented proof.
 
 ---
 
-## Architecture Overview
+## Universal Hosting & Adapter Matrix
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        SPS-CMS CORE ARCHITECTURE                       │
-├───────────────────────────────────┬────────────────────────────────────┤
-│ 1. DATA LAYER (Self-Contained)    │ 2. STORAGE LAYER (Local / Client)  │
-│    • Hostinger / cPanel MySQL      │    • Local Server: /public/uploads │
-│    • SQLite / LibSQL (Embedded)    │    • Zero Third-Party Monthly Fee  │
-├───────────────────────────────────┴────────────────────────────────────┤
-│ 3. ADMIN LAYER (/admin) - The Dual-Engine Experience                   │
-│    ┌──────────────────────────────────┬──────────────────────────────┐ │
-│    │ Engine A: Visual In-Context      │ Engine B: Collection Manager │ │
-│    │ • Click-to-edit inline text      │ • Tour Packages / Products   │ │
-│    │ • Image swap with preview        │ • Searchable Data Tables     │ │
-│    │ • Section toggle & reordering    │ • Inspector Sidebar & Slugs  │ │
-│    │ • Locked design token safety     │ • "Show on Home" Switches    │ │
-│    └──────────────────────────────────┴──────────────────────────────┘ │
-├────────────────────────────────────────────────────────────────────────┤
-│ 4. FRONTEND ENGINE (Astro / Next.js)                                   │
-│    • Astro Islands (<AdminOverlay client:only="react" />)              │
-│    • 0kb Admin JS overhead for regular visitors                        │
-│    • Server Actions / Direct DB Queries (Instant Revalidation)         │
-└────────────────────────────────────────────────────────────────────────┘
+│                      UNIVERSAL SPS-CMS HOSTING MATRIX                  │
+├───────────────────┬──────────────────────┬─────────────────────────────┤
+│ Deployment Target │ Supported Databases  │ Media Storage Path          │
+├───────────────────┼──────────────────────┼─────────────────────────────┤
+│ cPanel / Shared   │ Native MySQL/MariaDB │ /public/uploads (Local)     │
+│ VPS (Docker/PM2)  │ MySQL / Postgres /   │ /public/uploads or          │
+│                   │ SQLite (Embedded)    │ Self-hosted MinIO           │
+│ Cloudflare Pages  │ Cloudflare D1 /      │ Cloudflare R2 Bucket        │
+│                   │ Hyperdrive / Turso   │                             │
+│ Vercel / Netlify  │ PostgreSQL / Neon /  │ S3 / Cloudflare R2 /        │
+│                   │ Turso LibSQL         │ Blob Storage                │
+│ Railway / Render  │ PostgreSQL / MySQL / │ Persistent Volume /         │
+│                   │ SQLite (Volume)      │ S3 Compatible               │
+└───────────────────┴──────────────────────┴─────────────────────────────┘
 ```
-
----
-
-## Operating Modes
-
-### 1. Scaffold Mode (`/sps-cms scaffold`)
-Initialize full CMS foundation in a new or existing Astro / Next.js project:
-- Generates `cms.config.ts`.
-- Configures database connection (`db/mysql.ts` or `db/sqlite.ts`).
-- Generates `/admin` routes, auth session check, and local `/api/upload` endpoint.
-- Bootstraps Engine A (Live Editor Island) and Engine B (Collection Tables & Forms).
-
-### 2. Collection Add Mode (`/sps-cms add-collection <name>`)
-Add a new dynamic collection (e.g. `packages`, `products`, `services`, `destinations`):
-- Updates `cms.config.ts`.
-- Creates/migrates database table.
-- Generates admin list table + Add/Edit form with custom fields (Itinerary, Variants, Gallery, Toggles).
-- Generates dynamic detail route (e.g. `src/pages/packages/[slug].astro`).
-
-### 3. Sync & Repair Mode (`/sps-cms sync`)
-Audits existing CMS implementation for broken slugs, missing fields, or out-of-sync frontend queries.
-
-### 4. Verify Mode (`/sps-cms verify`)
-Executes full roundtrip verification test suite.
-
----
-
-## Interoperability with Hosts & Agents
-
-`sps-cms` is natively compatible with:
-- **Antigravity / Antigravity CLI** (`~/.gemini/config/skills/sps-cms`)
-- **Claude Code** (`~/.claude/skills/sps-cms`)
-- **Cursor** (`~/.cursor/skills/sps-cms`)
-- **Windsurf / Cascade** (`~/.windsurf/skills/sps-cms`)
-- **Codex / GitHub Copilot / OpenCode** (`~/.agents/skills/sps-cms`)
 
 ---
 
 ## Detailed References
 
-- [METHOD-CARD.md](METHOD-CARD.md) — Step-by-step workflow & execution loop
-- [CMS-ENGINES.md](CMS-ENGINES.md) — Deep dive into Engine A & Engine B UX
-- [DATABASE-ADAPTERS.md](DATABASE-ADAPTERS.md) — MySQL (Hostinger) & SQLite implementation
+- [METHOD-CARD.md](METHOD-CARD.md) — Discovery grill & execution workflow
+- [CMS-ENGINES.md](CMS-ENGINES.md) — Dual-Engine UX & polymorphic collection architecture
+- [DATABASE-ADAPTERS.md](DATABASE-ADAPTERS.md) — Multi-driver adapters (MySQL, Postgres, SQLite, D1, LibSQL)
 - [AUTO-SYNC-PROTOCOL.md](AUTO-SYNC-PROTOCOL.md) — Single Source of Truth & slug safety
-- [FRAMEWORK-ADAPTERS.md](FRAMEWORK-ADAPTERS.md) — Astro & Next.js concrete patterns
+- [FRAMEWORK-ADAPTERS.md](FRAMEWORK-ADAPTERS.md) — Astro & Next.js deploy recipes
 - [ROUNDTRIP-VERIFICATION.md](ROUNDTRIP-VERIFICATION.md) — Mandatory DoD checklist
-- [INSTALL.md](INSTALL.md) — Installation, updates, and uninstallation guides
+- [INSTALL.md](INSTALL.md) — Multi-agent installer and updater

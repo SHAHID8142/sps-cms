@@ -1,126 +1,103 @@
-# The Dual-Engine Admin Architecture
+# The Dual-Engine Admin & Polymorphic Collection Architecture
 
-To satisfy both non-technical clients and complex business websites (travel, e-commerce, real estate, agency), SPS-CMS strictly enforces a **Dual-Engine Model** inside `/admin`.
+SPS-CMS strictly separates content editing into two complementary engines inside `/admin`:
+1. **Engine A (Visual In-Context Page Editor):** For static page text and media.
+2. **Engine B (Centralized Polymorphic Collection Manager):** For ANY bulk/repeat entities across any industry.
 
 ---
 
 ## Engine A: Visual In-Context Page Editor (For Pages & Sections)
 
-### Target Use Case
-- Landing page sections (Hero headlines, CTA text, Subtitles).
-- About Us narrative, Mission/Vision paragraphs.
-- Contact information, Footer links, Announcement banners.
+### Use Case
+- Landing page copy, Hero headlines, Subtitles, Call-to-action buttons.
+- About Us company narrative, Mission/Vision statements.
+- Contact info, FAQs, Footer links, Announcement banners.
 
 ### UX Flow
-1. Admin logs into `/admin` or visits any page with an active session cookie.
-2. A sleek floating top-bar appears at the top of the browser:
-   ```
-   [ ⚡ Edit Mode: ON ]  |  Page: Home (/)  |  [ 💾 Save Draft ]  [ 🚀 Publish ]  [ ✖ Exit ]
-   ```
-3. **Inline Text Editing:**
-   - Elements wrapped with `<EditableText id="hero.title" default="Explore the World" />` activate a content-editable cursor on click.
-   - Text formatting toolbar (Bold, Italic, Link) appears upon text selection (Medium/Notion style).
-4. **Image Swapping:**
-   - Clicking on any image marked with `<EditableImage id="hero.bg" />` opens a compact upload modal.
-   - Admin drags a photo from desktop ➜ uploads to `/public/uploads` ➜ image immediately updates in the preview.
-5. **Safety Constraints (Anti-Breakage):**
-   - Clients CANNOT alter CSS styles, fonts, margins, or padding.
-   - Layout integrity is 100% preserved according to the developer's design tokens.
+1. Admin logs into `/admin` or visits the site with an active session.
+2. Floating top bar appears: `[ ⚡ Edit Mode: ON ] | Page: Home (/) | [ 💾 Save Draft ] [ 🚀 Publish ]`.
+3. **Inline Text Editing:** Clicking any text wrapped in `<EditableText id="hero.title" default="Headline" />` activates an inline content-editable cursor.
+4. **Image Swapping:** Clicking an `<EditableImage id="hero.bg" />` opens a sleek upload modal that writes directly to `/public/uploads` (or R2/S3) and updates the live preview immediately.
+5. **Anti-Breakage Guarantee:** CSS styles, fonts, margins, and design tokens remain 100% locked.
 
 ---
 
-## Engine B: Centralized Collection Manager (WordPress & Shopify Clarity)
+## Engine B: Universal Polymorphic Collection Manager (For ALL Bulk Entities)
 
-### Target Use Case
-- Tour Packages (Dates, Itineraries, Price, Booking Links).
-- E-Commerce Products (SKU, Price, Inventory, Variants, Categories).
-- Services, Portfolio Items, Team Members, Testimonials, Blog Posts.
+Any repeat or bulk data entity is defined in `cms.config.ts`. The CMS engine automatically generates:
+1. A dedicated sidebar navigation tab with a custom icon.
+2. A searchable, filterable Data Table.
+3. A structured Shopify-style Add/Edit form with inspector sidebars and auto-slugs.
 
-### 1. The List View (Data Table)
-Located at `/admin/collections/[name]` (e.g. `/admin/collections/packages`).
+### Industry Examples of Polymorphic Collections
+
+```
+┌─────────────────────────┬─────────────────────────┬─────────────────────────┐
+│ Real Estate Agency      │ Medical / Clinic        │ Restaurant & Cafe       │
+├─────────────────────────┼─────────────────────────┼─────────────────────────┤
+│ • Properties            │ • Doctors / Specialists │ • Menu Categories       │
+│ • Floor Plans           │ • Clinic Branches       │ • Food Dishes & Drinks  │
+│ • Agents / Brokers      │ • Patient Testimonials  │ • Chef Specials         │
+├─────────────────────────┼─────────────────────────┼─────────────────────────┤
+│ Education & Academy     │ SaaS & Digital Products │ Tourism & Travel        │
+├─────────────────────────┼─────────────────────────┼─────────────────────────┤
+│ • Courses & Workshops   │ • Product Features      │ • Tour Packages         │
+│ • Instructors           │ • Case Studies          │ • Destinations          │
+│ • Student Reviews       │ • Changelog Entries     │ • Itineraries & Guides  │
+└─────────────────────────┴─────────────────────────┴─────────────────────────┘
+```
+
+---
+
+### 1. The Universal List View (Data Table)
+Located at `/admin/collections/[name]`.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────────────────────┐
-│  📦 TOUR PACKAGES                                                 [ + Add New Package ]│
+│  🏢 REAL ESTATE PROPERTIES                                        [ + Add New Property]│
 ├────────────────────────────────────────────────────────────────────────────────────────┤
-│  [🔍 Search packages...]  [Category: All ▼]  [Status: All ▼]  [Sort: Newest ▼]         │
+│  [🔍 Search properties...]  [Type: All ▼]  [Status: All ▼]  [Sort: Newest ▼]           │
 ├──────┬────────────────────────────┬──────────┬─────────────┬─────────────┬─────────────┤
-│ Thumb│ Title                      │ Price    │ Home Feature│ Status      │ Actions     │
+│ Photo│ Title                      │ Price    │ Home Feature│ Status      │ Actions     │
 ├──────┼────────────────────────────┼──────────┼─────────────┼─────────────┼─────────────┤
-│ 🖼️   │ Bali 5-Day Tropical Escape │ $650     │    [ ON ]   │  Published  │ Edit ✏️  🗑️ │
-│ 🖼️   │ Sajek Valley Cloud Trek    │ $120     │    [ OFF]   │  Published  │ Edit ✏️  🗑️ │
-│ 🖼️   │ Switzerland Alpine Tour    │ $2,400   │    [ ON ]   │  Draft      │ Edit ✏️  🗑️ │
+│ 🖼️   │ Marina Bay Luxury Villa    │ $1.2M    │    [ ON ]   │  Published  │ Edit ✏️  🗑️ │
+│ 🖼️   │ Downtown Penthouse Studio  │ $650K    │    [ OFF]   │  Published  │ Edit ✏️  🗑️ │
+│ 🖼️   │ Palm Heights Modern House  │ $890K    │    [ ON ]   │  Draft      │ Edit ✏️  🗑️ │
 └──────┴────────────────────────────┴──────────┴─────────────┴─────────────┴─────────────┘
 ```
 
-#### Key List Table Features:
-- **Instant Search & Filter:** Instant client-side or server query filtering by search query, category, and status.
-- **Inline Quick Toggles:** Toggle `show_on_homepage` or `is_published` directly from the table without opening the full edit page.
-- **Bulk Actions:** Bulk delete, bulk draft, bulk category assign.
+#### Key List Features:
+- **Instant Search & Filter:** Filter by keywords, categories/types, and publication status.
+- **Quick Switch Toggles:** Toggle `show_on_homepage` directly in the table row without opening the form.
+- **Bulk Actions:** Bulk delete, bulk status toggle.
 
 ---
 
-### 2. The Add / Edit Form (The Shopify-Inspired Two-Column Layout)
+### 2. The Universal Two-Column Add / Edit Form
 
 Located at `/admin/collections/[name]/new` or `/admin/collections/[name]/edit/[id]`.
 
 ```
 ┌───────────────────────────────────────────────────┬──────────────────────────────────┐
-│  ⬅️ Back to Packages      Editing: "Bali 5-Day"    │  [ Save Draft ]  [ 🚀 Publish ]  │
+│  ⬅️ Back to List          Editing Item            │  [ Save Draft ]  [ 🚀 Publish ]  │
 ├───────────────────────────────────────────────────┼──────────────────────────────────┤
-│  📌 MAIN CONTENT COLUMN                           │  ⚙️ INSPECTOR SIDEBAR            │
+│  📌 MAIN COLUMN (Content & Repeaters)             │  ⚙️ INSPECTOR SIDEBAR            │
 │                                                   │                                  │
-│  Package Title *                                  │  • Status & Visibility           │
-│  [ Bali 5-Day Tropical Escape                 ]   │    Status: [ Published ▼ ]       │
+│  Title / Name *                                   │  • Publishing & Visibility       │
+│  [ Marina Bay Luxury Villa                     ]  │    Status: [ Published ▼ ]       │
 │                                                   │    [✔] Show on Homepage          │
-│  Slug (Auto-generated & Editable)                 │    [✔] Mark as Featured          │
-│  https://mysite.com/packages/[ bali-5-day-escape] │    [ ] Sold Out / Inactive       │
-│                                                   │                                  │
-│  Pricing & Meta                                   │  • Organization                  │
-│  Regular Price: [ $650 ]  Sale Price: [ $580 ]    │    Category: [ Island Tours ▼ ]  │
-│  Duration: [ 5 Days / 4 Nights ]                  │    Tags: [ Beach, Tropical, Honeymoon]
-│                                                   │                                  │
-│  Featured Photo & Gallery                         │  • Featured Image                │
-│  ┌──────────────────────────────────────────────┐ │    ┌───────────────────────────┐ │
-│  │ 🖼️  Drag & drop photos here or Browse Files  │ │    │ [ Bali-Hero.jpg ]         │ │
-│  │ (Directly saved to /public/uploads)          │ │    │ [ Change ] [ Remove ]     │ │
-│  └──────────────────────────────────────────────┘ │    └───────────────────────────┘ │
-│                                                   │                                  │
-│  Day-by-Day Itinerary (Dynamic Repeater)          │  • SEO Metadata                  │
-│  Day 1: [ Arrival, Resort Check-in, Sunset Bar]   │    SEO Title: [ Bali 5-Day... ]  │
-│  Day 2: [ Nusa Penida Island Speedboat Tour   ]   │    SEO Description: [ Join us... │
-│  [ + Add Another Day ]                            │                                  │
+│  URL Slug (Auto-generated & Conflict-Free)        │    [✔] Mark as Featured / Hot    │
+│  https://mysite.com/properties/[ marina-bay-villa]│                                  │
+│                                                   │  • Taxonomy & Category           │
+│  Numeric Index (Price / Ordering)                 │    Category: [ Luxury Villa ▼ ]  │
+│  Price / Metric: [ 1200000 ]                      │                                  │
+│                                                   │  • Main Featured Image           │
+│  Custom Dynamic Fields & Repeaters                │    ┌───────────────────────────┐ │
+│  • Bedrooms: [ 4 ]   • Bathrooms: [ 3.5 ]         │    │ [ Villa-Front.webp ]      │ │
+│  • Square Feet: [ 3,800 sqft ]                    │    │ [ Change ] [ Remove ]     │ │
+│  • Amenities Repeater: [ Pool, Gym, Smart Home ]  │    └───────────────────────────┘ │
+│  • Description (Rich Text Editor)                 │                                  │
+│                                                   │  • SEO Meta                      │
+│                                                   │    Meta Title / Description      │
 └───────────────────────────────────────────────────┴──────────────────────────────────┘
-```
-
----
-
-## Technical Routing Architecture
-
-```
-src/
-├── pages/
-│   ├── admin/
-│   │   ├── index.astro                  # Admin Overview / Metrics
-│   │   ├── login.astro                  # Admin Auth Login
-│   │   ├── pages/                       # Engine A: Page List & Visual Editor launchers
-│   │   │   └── index.astro
-│   │   ├── collections/                 # Engine B: Collection Hub
-│   │   │   ├── [collection]/
-│   │   │   │   ├── index.astro          # Collection Data Table
-│   │   │   │   ├── new.astro            # Add Form
-│   │   │   │   └── [id].astro           # Edit Form
-│   │   ├── media/                       # Media Library (/public/uploads viewer)
-│   │   │   └── index.astro
-│   │   └── settings/                    # Global Site Settings (Logo, SEO, Socials)
-│   │       └── index.astro
-│   └── api/
-│       ├── auth/
-│       │   ├── login.ts
-│       │   └── logout.ts
-│       ├── cms/
-│       │   ├── save-page.ts
-│       │   ├── save-collection.ts
-│       │   └── delete-collection.ts
-│       └── upload.ts                    # Direct disk upload to /public/uploads
 ```

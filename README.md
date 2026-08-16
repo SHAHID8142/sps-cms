@@ -1,7 +1,7 @@
-# ⚡ SPS-CMS
+# ⚡ SPS-CMS (Universal & Host-Agnostic)
 
-> **Master Self-Contained Visual & Collection CMS Architect for Modern Web Stacks (Astro & Next.js)**  
-> *Zero SaaS dependencies, 100% Client-Owned DBs (Hostinger/cPanel MySQL, SQLite), Dual-Engine Admin, and Zero-Bug Auto-Sync.*
+> **Master Universal Visual & Collection CMS Architect for Modern Web Stacks (Astro & Next.js)**  
+> *Zero SaaS lock-in, 100% Client-Owned Hosting & DBs (MySQL, Postgres, SQLite, Cloudflare D1), Universal Polymorphic Collections, Dual-Engine Admin, and Zero-Bug Auto-Sync.*
 
 ---
 
@@ -11,23 +11,25 @@ Modern web development with **Astro** and **Next.js** produces blindingly fast w
 - **Headless CMS SaaS** (Sanity, Contentful, Strapi Cloud) introduce costly monthly subscriptions and confusing forms that alienate non-technical clients.
 - **WordPress** offers great non-coder visual editing, but brings heavy PHP bloat, slow database queries, and plugin security vulnerabilities.
 
-**SPS-CMS solves this forever.** It equips AI coding agents (**Antigravity, Claude Code, Cursor, Windsurf**) to scaffold and wire an ultra-clean, WordPress/Shopify-grade CMS directly inside the client's own codebase and hosting.
+**SPS-CMS solves this permanently across any host and any industry.** It equips AI coding agents (**Antigravity, Claude Code, Cursor, Windsurf**) to discover the client's hosting plan, choose the optimal local database engine, model any bulk industry data, and scaffold a clean, WordPress/Shopify-grade CMS directly inside the client's own codebase.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                        SPS-CMS CORE ARCHITECTURE                       │
+│                   UNIVERSAL SPS-CMS ARCHITECTURE                       │
 ├───────────────────────────────────┬────────────────────────────────────┤
-│ 1. DATA LAYER (Self-Contained)    │ 2. STORAGE LAYER (Local / Client)  │
-│    • Hostinger / cPanel MySQL      │    • Local Server: /public/uploads │
-│    • SQLite / LibSQL (Embedded)    │    • Zero Third-Party Monthly Fee  │
+│ 1. DATA LAYER (Host-Agnostic)     │ 2. STORAGE LAYER (Client-Owned)    │
+│    • Native MySQL (cPanel/VPS)    │    • Local Server: /public/uploads │
+│    • SQLite / LibSQL (Embedded)   │    • Cloudflare R2 / S3 Storage    │
+│    • PostgreSQL / Neon / Supabase │    • Zero Third-Party Monthly Fee  │
+│    • Cloudflare D1 (Edge Native)  │                                    │
 ├───────────────────────────────────┴────────────────────────────────────┤
 │ 3. ADMIN LAYER (/admin) - The Dual-Engine Experience                   │
 │    ┌──────────────────────────────────┬──────────────────────────────┐ │
 │    │ Engine A: Visual In-Context      │ Engine B: Collection Manager │ │
-│    │ • Click-to-edit inline text      │ • Tour Packages / Products   │ │
-│    │ • Image swap with preview        │ • Searchable Data Tables     │ │
-│    │ • Section toggle & reordering    │ • Inspector Sidebar & Slugs  │ │
-│    │ • Locked design token safety     │ • "Show on Home" Switches    │ │
+│    │ • Click-to-edit inline text      │ • Real Estate, Doctors,      │ │
+│    │ • Image swap with preview        │   Tours, Products, Dishes... │ │
+│    │ • Section toggle & reordering    │ • Searchable Data Tables     │ │
+│    │ • Locked design token safety     │ • Inspector Sidebar & Slugs  │ │
 │    └──────────────────────────────────┴──────────────────────────────┘ │
 ├────────────────────────────────────────────────────────────────────────┤
 │ 4. FRONTEND ENGINE (Astro / Next.js)                                   │
@@ -57,60 +59,43 @@ Supported AI Hosts:
 
 ---
 
-## 💎 Core Capabilities
+## 💎 Core Superpowers
 
-### 1. Zero External SaaS (100% Client-Owned)
-- **Database:** Runs natively on the client's existing hosting (Hostinger MySQL, cPanel MySQL, or local SQLite).
-- **Media Uploads:** Directly stored in `/public/uploads` on the server disk with MIME-type verification and security sanitization. Zero cloud storage bills.
+### 1. Mandatory Hosting & Infrastructure Discovery Grill
+Before writing any CMS code, `sps-cms` mandates that the AI agent confirms:
+1. **Deploy Target:** Shared/cPanel (Hostinger, Namecheap), VPS (Docker/PM2), Edge (Cloudflare Pages), Serverless (Vercel, Netlify), or PaaS (Railway, Render).
+2. **Database Engine:** Native MySQL, PostgreSQL, Embedded SQLite, Cloudflare D1, or LibSQL.
+3. **Media Strategy:** Local disk (`/public/uploads`), Cloudflare R2, or S3 bucket.
+4. **Content Inventory:** What bulk collections and custom fields are required.
 
-### 2. The Dual-Engine Admin Experience
+### 2. 100% Polymorphic Bulk Collection Engine
+Model **ANY bulk entity** for **ANY industry** in `cms.config.ts`:
+- **Real Estate:** Properties, Floor Plans, Agents, Amenities.
+- **Healthcare & Clinics:** Doctors, Departments, Patient Reviews.
+- **Restaurants & Cafes:** Menu Categories, Dishes, Chef Specials.
+- **Tourism & Travel:** Tour Packages, Destinations, Itineraries.
+- **SaaS & Tech:** Features, Case Studies, Changelog, Pricing.
+- **Education:** Courses, Lessons, Instructors, Batches.
+- **Agency & Portfolio:** Projects, Case Studies, Team Members.
+
+### 3. The Dual-Engine Admin Experience
 - **Engine A (Visual In-Context Page Editor):** For static text, hero banners, about narratives, and footer links. Admins click on text to edit inline and swap images live on the public page.
-- **Engine B (Centralized Collection Manager):** For multi-item catalogs like **Tour Packages, Products, Services, Portfolio items**. Features searchable, filterable Data Tables and Shopify-style Add/Edit forms with inspector sidebars.
+- **Engine B (Centralized Collection Manager):** Dedicated WordPress/Shopify-style searchable Data Tables and structured two-column Add/Edit forms with inspector sidebars, auto-slugs, and visibility switches (`Show on Homepage`, `Featured`).
 
-### 3. Single Source of Truth & Auto-Sync
-- Editing a package or product automatically updates:
+### 4. Single Source of Truth & Auto-Sync
+- Editing any bulk item in `/admin` immediately reflects across:
   - **Homepage Featured Grid** (via `Show on Homepage` toggle).
   - **Category / Archive Grids**.
   - **Single Detail Pages** (`/[collection]/[slug]`).
 - Auto-generates clean, conflict-free URL slugs to eliminate 404 errors.
-
-### 4. Full SPS Ecosystem Compatibility
-- When used inside an `/sps` project, `sps-cms` automatically hooks into `./.sps/cms-foundation.md`, `./.sps/content-model.md`, and enforces CMS-coupling laws.
-- When used standalone, it serves as a complete autonomous CMS engine.
 
 ---
 
 ## 🛠️ Operating Modes
 
 - `/sps-cms scaffold` — Initialize CMS config, database connectors, auth, and `/admin` routes.
-- `/sps-cms add-collection <name>` — Add a new collection (e.g. `packages`, `products`, `services`) with custom fields.
+- `/sps-cms add-collection <name>` — Add a new bulk collection (e.g. `properties`, `doctors`, `courses`) with custom fields.
 - `/sps-cms verify` — Run full roundtrip test (Create ➜ Edit ➜ Auto-Sync Verification ➜ Media Asset Check).
-
----
-
-## 📂 Repository Structure
-
-```
-sps-cms/
-├── SKILL.md                          # Master skill entry point (YAML frontmatter + Laws)
-├── METHOD-CARD.md                    # Step-by-step workflow & loop
-├── CMS-ENGINES.md                    # Visual In-Context vs Collection Hub UX specs
-├── DATABASE-ADAPTERS.md              # MySQL (Hostinger) & SQLite implementation
-├── AUTO-SYNC-PROTOCOL.md             # Single Source of Truth & slug safety
-├── FRAMEWORK-ADAPTERS.md             # Astro & Next.js concrete patterns
-├── ROUNDTRIP-VERIFICATION.md         # Mandatory 5-point DoD checklist
-├── INSTALL.md                        # Installation & updater guides
-├── scripts/
-│   ├── install.sh                    # Multi-agent automated installer
-│   ├── update.sh                     # Update script
-│   └── uninstall.sh                  # Clean uninstaller
-└── templates/                        # Reusable, production-grade blueprints
-    ├── config/cms.config.ts          # Universal schema configuration
-    ├── db/                           # MySQL & SQLite schemas and query clients
-    ├── admin-ui/                     # Tailwind Dashboard, DataTable, EntityForm, MediaUploader
-    ├── visual-editor/                # React Island LiveEditorOverlay & EditableText
-    └── astro-routes/                 # /admin Astro routes, API handlers, and upload endpoints
-```
 
 ---
 
