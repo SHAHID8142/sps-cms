@@ -10,6 +10,7 @@ interface ActiveInspector {
   type: 'text' | 'cta' | 'image';
   text: string;
   link: string;
+  imageUrl: string;
   targetBlank: boolean;
   rect: DOMRect;
 }
@@ -19,10 +20,58 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
   const [isMinimized, setIsMinimized] = useState(false);
   const [dirty, setDirty] = useState(false);
   const [saving, setSaving] = useState(false);
+  const [uploading, setUploading] = useState(false);
   const [publishedToast, setPublishedToast] = useState(false);
   const [inspector, setInspector] = useState<ActiveInspector | null>(null);
 
   const inspectorRef = useRef<HTMLDivElement>(null);
+
+  const openInspectorForElement = (spsEl: HTMLElement) => {
+    const key = spsEl.getAttribute('data-sps-key') || '';
+    let type = (spsEl.getAttribute('data-sps-type') as any);
+    if (!type) {
+      if (spsEl.tagName === 'IMG' || spsEl.querySelector('img') || spsEl.getAttribute('data-sps-image')) {
+        type = 'image';
+      } else if (spsEl.tagName === 'A' || spsEl.closest('a')) {
+        type = 'cta';
+      } else {
+        type = 'text';
+      }
+    }
+    
+    let link = spsEl.getAttribute('data-sps-link') || '';
+    if (!link && spsEl.tagName === 'A') {
+      link = spsEl.getAttribute('href') || '';
+    } else if (!link && spsEl.closest('a')) {
+      link = spsEl.closest('a')?.getAttribute('href') || '';
+    }
+
+    let imageUrl = '';
+    if (spsEl.tagName === 'IMG') {
+      imageUrl = (spsEl as HTMLImageElement).src;
+    } else if (spsEl.querySelector('img')) {
+      imageUrl = (spsEl.querySelector('img') as HTMLImageElement).src;
+    } else {
+      imageUrl = spsEl.getAttribute('data-sps-image') || '';
+    }
+
+    const textEl = spsEl.querySelector('[data-sps-field="text"]') as HTMLElement || spsEl;
+    const text = textEl.innerText.trim();
+    const targetBlank = spsEl.getAttribute('target') === '_blank' || spsEl.closest('a')?.getAttribute('target') === '_blank';
+
+    const rect = spsEl.getBoundingClientRect();
+
+    setInspector({
+      element: spsEl,
+      key,
+      type,
+      text,
+      link,
+      imageUrl,
+      targetBlank,
+      rect
+    });
+  };
 
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
@@ -37,32 +86,7 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
       if (spsEl) {
         e.preventDefault();
         e.stopPropagation();
-
-        const key = spsEl.getAttribute('data-sps-key') || '';
-        const type = (spsEl.getAttribute('data-sps-type') as any) || (spsEl.tagName === 'A' || spsEl.closest('a') ? 'cta' : 'text');
-        
-        let link = spsEl.getAttribute('data-sps-link') || '';
-        if (!link && spsEl.tagName === 'A') {
-          link = spsEl.getAttribute('href') || '';
-        } else if (!link && spsEl.closest('a')) {
-          link = spsEl.closest('a')?.getAttribute('href') || '';
-        }
-
-        const textEl = spsEl.querySelector('[data-sps-field="text"]') as HTMLElement || spsEl;
-        const text = textEl.innerText.trim();
-        const targetBlank = spsEl.getAttribute('target') === '_blank' || spsEl.closest('a')?.getAttribute('target') === '_blank';
-
-        const rect = spsEl.getBoundingClientRect();
-
-        setInspector({
-          element: spsEl,
-          key,
-          type,
-          text,
-          link,
-          targetBlank,
-          rect
-        });
+        openInspectorForElement(spsEl);
       } else {
         setInspector(null);
       }
@@ -87,7 +111,7 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
       const htmlEl = el as HTMLElement;
       if (next) {
         htmlEl.classList.add('ring-2', 'ring-emerald-400/80', 'ring-offset-2', 'ring-offset-slate-950', 'rounded-lg', 'cursor-pointer', 'transition-all');
-        htmlEl.setAttribute('title', 'Click to edit text & link destination');
+        htmlEl.setAttribute('title', 'Click to edit text, link or image');
       } else {
         htmlEl.classList.remove('ring-2', 'ring-emerald-400/80', 'ring-offset-2', 'ring-offset-slate-950', 'rounded-lg', 'cursor-pointer');
         htmlEl.removeAttribute('title');
@@ -95,12 +119,46 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
     });
   };
 
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file || !inspector) return;
+
+    setUploading(true);
+    const formData = new FormData();
+    formData.append('file', file);
+
+    try {
+      const res = await fetch('/api/upload', {
+        method: 'POST',
+        body: formData
+      });
+      const data = await res.json();
+      if (data.url) {
+        setInspector({ ...inspector, imageUrl: data.url });
+      }
+    } finally {
+      setUploading(false);
+    }
+  };
+
   const handleApplyInspector = () => {
     if (!inspector) return;
-    const { element, text, link, targetBlank } = inspector;
+    const { element, text, link, imageUrl, targetBlank, type } = inspector;
 
-    const textEl = element.querySelector('[data-sps-field="text"]') as HTMLElement || element;
-    textEl.innerText = text;
+    if (type === 'image' && imageUrl) {
+      if (element.tagName === 'IMG') {
+        (element as HTMLImageElement).src = imageUrl;
+      } else {
+        const childImg = element.querySelector('img');
+        if (childImg) childImg.src = imageUrl;
+      }
+      element.setAttribute('data-sps-image', imageUrl);
+    }
+
+    if (type !== 'image') {
+      const textEl = element.querySelector('[data-sps-field="text"]') as HTMLElement || element;
+      textEl.innerText = text;
+    }
 
     if (link) {
       element.setAttribute('data-sps-link', link);
@@ -142,7 +200,13 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
           content[`${key}_link`] = link;
         }
 
-        content[key] = textEl.innerText.trim();
+        const image = node.getAttribute('data-sps-image') || (node.tagName === 'IMG' ? (node as HTMLImageElement).src : node.querySelector('img')?.src);
+        if (image) {
+          content[`${key}_image`] = image;
+          content[key] = image;
+        } else {
+          content[key] = textEl.innerText.trim();
+        }
       });
 
       const res = await fetch('/api/cms/save-page', {
@@ -158,6 +222,14 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
       }
     } finally {
       setSaving(false);
+    }
+  };
+
+  const handleEditHeroBg = () => {
+    const heroBgEl = document.querySelector('[data-sps-key="hero.bg_image"]') as HTMLElement;
+    if (heroBgEl) {
+      if (!isEditing) toggleMode();
+      openInspectorForElement(heroBgEl);
     }
   };
 
@@ -201,6 +273,15 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
               <span>{isEditing ? '⚡ Edit Mode: ON' : '👁️ Edit Mode: OFF'}</span>
             </button>
 
+            <button
+              onClick={handleEditHeroBg}
+              className="px-3 py-1.5 bg-slate-900 border border-slate-700 hover:bg-slate-800 text-slate-300 rounded-full font-semibold flex items-center gap-1 transition-colors"
+              title="Change Hero Background Image"
+            >
+              <span>🖼️</span>
+              <span className="hidden sm:inline">Hero BG</span>
+            </button>
+
             {dirty && (
               <button
                 onClick={handleSave}
@@ -235,7 +316,7 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
           ref={inspectorRef}
           style={{
             position: 'fixed',
-            top: Math.min(window.innerHeight - 320, Math.max(60, inspector.rect.bottom + 10)),
+            top: Math.min(window.innerHeight - 360, Math.max(60, inspector.rect.bottom + 10)),
             left: Math.min(window.innerWidth - 360, Math.max(20, inspector.rect.left)),
             zIndex: 999999
           }}
@@ -245,7 +326,7 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
             <div className="flex items-center gap-1.5">
               <span className="w-2 h-2 rounded-full bg-emerald-400"></span>
               <span className="font-bold text-white text-xs uppercase tracking-wider">
-                {inspector.type === 'cta' ? '🔗 Edit CTA & Link' : '✏️ Edit Text Block'}
+                {inspector.type === 'image' ? '🖼️ Swap Image' : inspector.type === 'cta' ? '🔗 Edit CTA & Link' : '✏️ Edit Text Block'}
               </span>
             </div>
             <button
@@ -257,17 +338,46 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
           </div>
 
           <div className="space-y-3">
-            <div>
-              <label className="block text-[11px] font-semibold text-slate-400 mb-1">
-                Visible Text / Label *
-              </label>
-              <input
-                type="text"
-                value={inspector.text}
-                onChange={(e) => setInspector({ ...inspector, text: e.target.value })}
-                className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:outline-none focus:border-emerald-500 text-xs"
-              />
-            </div>
+            {inspector.type === 'image' ? (
+              <div className="space-y-3">
+                {inspector.imageUrl && (
+                  <div className="rounded-xl overflow-hidden border border-slate-800 max-h-36 bg-slate-900 shadow">
+                    <img src={inspector.imageUrl} alt="Preview" className="w-full h-full object-cover" />
+                  </div>
+                )}
+                <div>
+                  <label className="block text-[11px] font-semibold text-slate-400 mb-1">Image URL / Path</label>
+                  <input
+                    type="text"
+                    value={inspector.imageUrl}
+                    onChange={(e) => setInspector({ ...inspector, imageUrl: e.target.value })}
+                    placeholder="https://... or /uploads/..."
+                    className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-mono text-xs focus:outline-none focus:border-emerald-500"
+                  />
+                </div>
+                <div>
+                  <label className="block text-center border-2 border-dashed border-slate-700 hover:border-emerald-500 p-3.5 rounded-xl cursor-pointer bg-slate-900/50 transition-colors">
+                    <span className="text-[11px] text-emerald-400 font-bold block">
+                      {uploading ? 'Uploading to /public/uploads...' : '📁 Upload New File from Device'}
+                    </span>
+                    <span className="text-[10px] text-slate-500">JPG, PNG, WEBP up to 15MB</span>
+                    <input type="file" accept="image/*" onChange={handleImageUpload} className="hidden" />
+                  </label>
+                </div>
+              </div>
+            ) : (
+              <div>
+                <label className="block text-[11px] font-semibold text-slate-400 mb-1">
+                  Visible Text / Label *
+                </label>
+                <input
+                  type="text"
+                  value={inspector.text}
+                  onChange={(e) => setInspector({ ...inspector, text: e.target.value })}
+                  className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-white font-medium focus:outline-none focus:border-emerald-500 text-xs"
+                />
+              </div>
+            )}
 
             {inspector.type === 'cta' && (
               <>
@@ -282,29 +392,6 @@ export const LiveEditorOverlay: React.FC<LiveEditorOverlayProps> = ({ pageSlug }
                     onChange={(e) => setInspector({ ...inspector, link: e.target.value })}
                     className="w-full bg-slate-900 border border-slate-700 rounded-lg px-3 py-2 text-emerald-400 font-mono focus:outline-none focus:border-emerald-500 text-xs"
                   />
-                  <div className="flex gap-1.5 mt-1.5">
-                    <button
-                      type="button"
-                      onClick={() => setInspector({ ...inspector, link: '/packages' })}
-                      className="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 hover:text-white px-2 py-0.5 rounded"
-                    >
-                      /packages
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setInspector({ ...inspector, link: '/#services' })}
-                      className="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 hover:text-white px-2 py-0.5 rounded"
-                    >
-                      /#services
-                    </button>
-                    <button
-                      type="button"
-                      onClick={() => setInspector({ ...inspector, link: '/#contact' })}
-                      className="text-[10px] bg-slate-900 border border-slate-800 text-slate-400 hover:text-white px-2 py-0.5 rounded"
-                    >
-                      /#contact
-                    </button>
-                  </div>
                 </div>
 
                 <label className="flex items-center gap-2 cursor-pointer pt-1">
