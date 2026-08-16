@@ -1,16 +1,13 @@
 ---
 name: sps-cms
 description: >
-  The Golden Master Universal, host-agnostic, language-agnostic, multi-language (i18n & RTL), and
-  industry-polymorphic Visual & Collection CMS architect for ALL web stacks (Astro, Next.js, Nuxt/Vue,
-  SvelteKit, Laravel/PHP, Django/FastAPI/Python, Go, Ruby, and Vanilla HTML). Enforces the 100% Granular
-  Visual Surface Coverage Law (every eyebrow, stat label, subtext, button, image, and section background is
-  live editable turning any website into a full visual builder), Site-Wide Global Settings Single-Point Sync
-  Law, Zero-SaaS Lead Capture & Inquiries Inbox Engine Law (built-in contact forms and lead dashboard without
-  third-party form fees), Custom Header Analytics & Tracking Pixel Injector, self-enforcing repository project
-  lock (GEMINI.md / AGENTS.md / CLAUDE.md), zero-redirection contextual popover inspectors with on-page image
-  swapping, native Google Gemini Flash AI auto-translation sync across multi-language fields, 1-click automated
-  database snapshot backups, and bulletproof file upload security guard.
+  Universal Visual & Collection CMS architect for ALL web stacks (Astro, Next.js,
+  Nuxt/Vue, SvelteKit, Laravel/PHP, Django/Python, Go, HTML). Triggered when the user
+  invokes /sps-cms, /sps cms-sync, /sps sync, /sps couple, or asks for CMS integration,
+  in-context live editing, admin panel, global settings, lead inquiries inbox, or
+  multi-language translation. Enforces the 100% Granular Visual Surface Coverage Law
+  (every eyebrow, stat label, subtext, button, image, and section background is live
+  editable turning any website into a full visual builder).
 ---
 
 # /sps-cms (v2.3.0 Ultimate Lead Capture & Full Builder Standard)
