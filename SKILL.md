@@ -3,17 +3,17 @@ name: sps-cms
 description: >
   The Golden Master Universal, host-agnostic, language-agnostic, multi-language (i18n & RTL), and
   industry-polymorphic Visual & Collection CMS architect for ALL web stacks (Astro, Next.js, Nuxt/Vue,
-  SvelteKit, Laravel/PHP, Django/FastAPI/Python, Go, Ruby, and Vanilla HTML). Features self-enforcing repository
-  project lock (GEMINI.md / AGENTS.md / CLAUDE.md), zero-redirection contextual popover inspectors with on-page
-  image swapping, native Google Gemini Flash AI auto-translation sync across multi-language fields, 1-click
-  automated database snapshot backups, bulletproof file upload security guard, zero-SaaS self-contained DB
-  adapters (MySQL, PostgreSQL, SQLite, LibSQL, D1), universal bulk collection engine, and strict roundtrip
-  verification across Windows, macOS, and Linux.
+  SvelteKit, Laravel/PHP, Django/FastAPI/Python, Go, Ruby, and Vanilla HTML). Enforces the 100% Granular
+  Visual Surface Coverage Law (every eyebrow, stat label, subtext, button, image, and section background is
+  live editable turning any website into a full visual builder), self-enforcing repository project lock
+  (GEMINI.md / AGENTS.md / CLAUDE.md), zero-redirection contextual popover inspectors with on-page image
+  swapping, native Google Gemini Flash AI auto-translation sync across multi-language fields, 1-click
+  automated database snapshot backups, and bulletproof file upload security guard.
 ---
 
-# /sps-cms (v2.0.0 Golden Master Standard)
+# /sps-cms (v2.1.0 Full Website Builder Standard)
 
-`/sps-cms` is the ultimate universal standard for building **high-performance, non-technical client-friendly CMS systems** with **Full Multi-Language (i18n & RTL) Support, Gemini Flash AI Auto-Translation, Zero-Redirection In-Context Inspectors, On-Page Image Swapping, 1-Click Backups, and Security Hardening** across **ANY programming language** and on **ANY hosting platform**.
+`/sps-cms` is the ultimate universal standard for building **high-performance, non-technical client-friendly CMS systems** that turn **ANY codebase into a 100% Granular Visual Website Builder**.
 
 Read [METHOD-CARD.md](METHOD-CARD.md) at the start of every session.
 
@@ -23,8 +23,13 @@ Read [METHOD-CARD.md](METHOD-CARD.md) at the start of every session.
 
 ```
 ┌────────────────────────────────────────────────────────────────────────┐
-│                   SPS-CMS v2.0.0 GOLDEN MASTER MATRIX                  │
+│               SPS-CMS v2.1.0 FULL BUILDER MATRIX                       │
 ├───────────────────┬────────────────────────────────────────────────────┤
+│ 100% Granular     │ ZERO hardcoded strings left behind. Every single   │
+│ Surface Coverage  │ eyebrow, badge, headline, sublabel, stat number,   │
+│                   │ stat title, button link, image, and footer text    │
+│                   │ has an active `data-sps-key` and database query.   │
+├───────────────────┼────────────────────────────────────────────────────┤
 │ Supported Stacks  │ Astro, Next.js, Nuxt/Vue, SvelteKit, Laravel,      │
 │                   │ Django/FastAPI, Go, Ruby, Static Vanilla HTML      │
 ├───────────────────┼────────────────────────────────────────────────────┤
@@ -38,9 +43,6 @@ Read [METHOD-CARD.md](METHOD-CARD.md) at the start of every session.
 │ (/admin)          │ Products, Doctors, Dishes) + Auto-Slugs + Tables   │
 ├───────────────────┼────────────────────────────────────────────────────┤
 │ Security & Backup │ 1-Click DB snapshot backup + Upload Security Guard │
-├───────────────────┼────────────────────────────────────────────────────┤
-│ Repository Lock   │ Self-enforcing permanent memory in GEMINI.md /     │
-│                   │ AGENTS.md / CLAUDE.md / .cursorrules               │
 └───────────────────┴────────────────────────────────────────────────────┘
 ```
 
@@ -61,24 +63,31 @@ Read [METHOD-CARD.md](METHOD-CARD.md) at the start of every session.
   6. **Media Storage:** Local server disk (`/public/uploads`), Cloudflare R2, or S3 bucket.
   7. **Bulk Collections Inventory:** What entities exist (Real Estate, Doctors, Packages, Products, Dishes, Courses).
 
-### 2. The In-Context Visual & Image-Swap Law (Engine A)
+### 2. The 100% Granular Visual Surface Coverage Law (Full Website Builder Standard)
+- **STRICT AGENT MANDATE:** It is **STRICTLY PROHIBITED** to leave ANY visible string, eyebrow, stat number, stat label, helper text, button link, or image hardcoded in HTML/JSX.
+- When scaffolding or coupling a website:
+  - **Every single piece of text** MUST have a unique `data-sps-key` (e.g. `stats.exp_number` AND `stats.exp_label`).
+  - **Every button/link** MUST expose both its visible text (`data-sps-field="text"`) and its destination URL (`data-sps-link`).
+  - **Every section background / hero image** MUST be tagged with `data-sps-key` and `data-sps-type="image"` for instant live swapping.
+
+### 3. The In-Context Visual & Image-Swap Law (Engine A)
 - The visual editor MUST run via a sleek floating bottom dock with zero top navbar overlap.
 - Clicking any text, CTA button, or image MUST NEVER redirect the browser. It MUST open an interactive popover inspector to edit text, destination links, or drop new images.
 
-### 3. Multi-Language & Gemini Flash AI Translation Law
+### 4. Multi-Language & Gemini Flash AI Translation Law
 - Form fields render language tabs: `[ 🇺🇸 EN | 🇧🇩 BN | 🇸🇦 AR (RTL) ]`.
 - With Gemini Flash, clicking `[ ✨ Auto-Translate ]` translates all fields in under 300ms.
 - Fallback Safety: Missing translations automatically render default locale strings with zero broken layouts.
 
-### 4. Bulletproof Security & 1-Click Backup Law
+### 5. Bulletproof Security & 1-Click Backup Law
 - File uploads must enforce extension/MIME whitelisting, directory traversal sanitization, and a 15MB cap.
 - Provide a 1-click JSON snapshot export (`/api/cms/backup`) from `/admin`.
 
-### 5. Universal Polymorphic Collection Law (Industry Agnostic)
+### 6. Universal Polymorphic Collection Law (Industry Agnostic)
 - Model ANY bulk entity for ANY industry in `cms.config.ts`. Automatically generates dedicated tabs, tables, forms, auto-slugs, and queries.
 
-### 6. Single Source of Truth & Auto-Sync Law
+### 7. Single Source of Truth & Auto-Sync Law
 - Updating any bulk item in `/admin` immediately reflects across Homepage featured grids, Archive grids, and single detail pages in all active languages.
 
-### 7. Mandatory Roundtrip DoD (Zero-Bug Delivery)
+### 8. Mandatory Roundtrip DoD (Zero-Bug Delivery)
 - Every CMS feature requires passing the 5-point [ROUNDTRIP-VERIFICATION.md](ROUNDTRIP-VERIFICATION.md) gate with documented proof.
